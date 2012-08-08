@@ -1,0 +1,35 @@
+6828 decimal is  octal!
+Physical memory: 66556K available, base = 640K, extended = 65532K
+check_page_alloc() succeeded!
+page_check() succeeded!
+check_boot_pgdir() succeeded!
+enabled interrupts: 1 2
+	     Setup timer interrupts via 8259A
+enabled interrupts: 0 1 2
+	     unmasked timer interrupt
+FS is running
+FS can do I/O
+Device 1 presence: 1
+icode startup
+icode: open /motd
+user panic in icode at lib/file.c:66: open not implemented
+Welcome to the JOS kernel monitor!
+Type 'help' for a list of commands.
+TRAP frame at 0xf01ed0f8
+  edi  0x00000000
+  esi  0x00000000
+  ebp  0xeebfdd70
+  oesp 0xefbfffdc
+  ebx  0x00000000
+  edx  0xeebfdc20
+  ecx  0x00000001
+  eax  0x00000001
+  es   0x----0023
+  ds   0x----0023
+  trap 0x00000003 Breakpoint
+  err  0x00000000
+  eip  0x0080023b
+  cs   0x----001b
+  flag 0x00000296
+  esp  0xeebfdd48
+  ss   0x----0023
