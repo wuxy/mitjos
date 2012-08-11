@@ -51,12 +51,12 @@ struct File {
 
 // File system super-block (both in-memory and on-disk)
 
-#define FS_MAGIC	0x4A0530AE	// related vaguely to 'J\0S!'
+#define FS_MAGIC	0x4A0530AE	// related vaguely to 'J0S!'
 
 struct Super {
 	uint32_t s_magic;		// Magic number: FS_MAGIC
-	uint32_t s_nblocks;		// Total number of blocks on disk磁盘的总块数
-	struct File s_root;		// Root directory node根目录节点
+	uint32_t s_nblocks;		// Total number of blocks on disk
+	struct File s_root;		// Root directory node
 };
 
 // Definitions for requests from clients to file system

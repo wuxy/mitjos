@@ -162,7 +162,7 @@ sys_env_set_pgfault_upcall(envid_t envid, void *func)
 	if(envid==0)
 		e=curenv;
 	else
-		if((r=envid2env(envid,&e,1))<0)
+		if((r=envid2env(envid,&e,0))<0)
 			return r;
 	e->env_pgfault_upcall=func;
 	return 0;
@@ -204,7 +204,7 @@ sys_page_alloc(envid_t envid, void *va, int perm)
 	if(envid==0)
 		e=curenv;
 	else
-        	if((r=envid2env(envid,&e,1))<0)
+        	if((r=envid2env(envid,&e,0))<0)
         	{
                 	return r;
         	}
@@ -267,14 +267,14 @@ sys_page_map(envid_t srcenvid, void *srcva,
 	if(srcenvid==0)
 		srcenv=curenv;
 	else
-		if((r=envid2env(srcenvid,&srcenv,1))<0)
+		if((r=envid2env(srcenvid,&srcenv,0))<0)//LAB 5:be carefull to use envid2env
         	{
                 	return r;
         	}
 	if(dstenvid==0)
 		dstenv=curenv;
 	else
-		if((r=envid2env(dstenvid,&dstenv,1))<0)
+		if((r=envid2env(dstenvid,&dstenv,0))<0)
         	{
                 	return r;
         	}
@@ -315,7 +315,7 @@ sys_page_unmap(envid_t envid, void *va)
 	if(envid==0)
 		e=curenv;
 	else
-		if((r=envid2env(envid,&e,1))<0)
+		if((r=envid2env(envid,&e,0))<0)
         	{
                 	return r;
         	}
@@ -376,7 +376,7 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 	struct Page *pg;
 	pte_t *pte;
 	uint32_t srcaddr=0;
-	
+	//cprintf("sys_ipc_try_send:here envid=%x\n",envid);
 	if((envid==0)||(envid==curenv->env_id))
 	{
 		cprintf("the same send:envid=%x\n",curenv->env_id);
@@ -385,17 +385,24 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 	else
 		if((r=envid2env(envid,&e,0))<0)
 		{
+			cprintf("envid2env:id=%x\n",envid);
 			return r;
 		}
+	//cprintf("panduan:env_ipc_recving\n");
 	if(!e->env_ipc_recving)
 		return -E_IPC_NOT_RECV;
+	//cprintf("panduan is over\n");
 	if(srcva){
 		srcaddr=(uint32_t)srcva;
 		if(srcaddr<(uint32_t)UTOP){
 			if(srcaddr&0xfff)
 				return -E_INVAL;
+			//cprintf("ipc send:some bugs in page mapping\n");
+			//cprintf("srcid=%x srcva=%x\n",curenv->env_id,srcva);
+			//cprintf("dstid=%x dstva=%x\n",envid,e->env_ipc_dstva);
 			if((r=sys_page_map(curenv->env_id,srcva,envid,e->env_ipc_dstva,perm))<0)
 				return r;
+			//cprintf("ipc send:no bugs in page mapping\n");
 		}
 	}
 	else perm=0;
@@ -404,6 +411,7 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 	e->env_ipc_value=value;
 	e->env_ipc_recving=0;
 	e->env_status=ENV_RUNNABLE;
+	//cprintf("send will successful\n");
 	return 0;
 	//panic("sys_ipc_try_send not implemented");
 }

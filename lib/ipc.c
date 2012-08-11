@@ -28,7 +28,7 @@ ipc_recv(envid_t *from_env_store, void *pg, int *perm_store)
 	if(pg)
 		dstva=pg;
 	env = &envs[ENVX(sys_getenvid())];
-	if(env->env_id==*from_env_store)
+	if(from_env_store&&(env->env_id==*from_env_store))
 	{
 		*from_env_store=0;
 		*perm_store=0;

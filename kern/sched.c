@@ -55,7 +55,7 @@ sched_yield(void)
 		{
 			if(envid==0)
 				continue;
-	//		cprintf("\nslected env:%x\n",envs[envid].env_id);
+			//cprintf("\nslected env:%x\n",envs[envid].env_id);
 			env_run(&envs[envid]);
 			//write_esp(retesp);
 			//trapret();

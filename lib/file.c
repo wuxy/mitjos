@@ -63,7 +63,29 @@ open(const char *path, int mode)
 	// file descriptor.
 
 	// LAB 5: Your code here.
-	panic("open not implemented");
+	struct Fd *fd;
+	int r;
+	if((r=fd_alloc(&fd))<0){
+		fd_close(fd,0);
+		return r;
+	}
+	cprintf("open:fd=%x\n",fd);
+	strcpy(fsipcbuf.open.req_path,path);
+	fsipcbuf.open.req_omode=mode;
+	if((r=fsipc(FSREQ_OPEN,(void*)fd))<0)
+	{
+		fd_close(fd,1);
+		return r;	
+	}
+	if((r=sys_page_map(0,(void*)fd,0,(void*)fd,PTE_P | PTE_W | PTE_U))<0)
+	{
+		fd_close(fd,1);
+		return r;
+	}
+	//INDEX2DATA(fd->fd_file.id);
+	cprintf("fileid=%x\n",fd->fd_file.id);
+	return fd->fd_file.id;
+	//panic("open not implemented");
 }
 
 // Flush the file descriptor.  After this the fileid is invalid.
@@ -94,7 +116,20 @@ devfile_read(struct Fd *fd, void *buf, size_t n)
 	// bytes read will be written back to fsipcbuf by the file
 	// system server.
 	// LAB 5: Your code here
-	panic("devfile_read not implemented");
+	ssize_t readsize;
+	if(debug)
+		cprintf("devfile_read:fileid=%x readsize=%x\n",fd->fd_file.id,n);
+	fsipcbuf.read.req_fileid=fd->fd_file.id;
+	fsipcbuf.read.req_n=n;
+	readsize=(ssize_t)fsipc(FSREQ_READ,&fsipcbuf);
+	cprintf("readsize=%d\n",readsize);
+	if(debug)
+		cprintf("devfile_read:buf1=%s\nbuf2=%s\n",(char*)&fsipcbuf,fsipcbuf.readRet.ret_buf);
+	if(readsize>0)
+		memmove(buf,(void*)&fsipcbuf,(size_t)readsize);
+	//cprintf("readsize=%d",readsize);
+	return readsize;
+	//panic("devfile_read not implemented");
 }
 
 // Write at most 'n' bytes from 'buf' to 'fd' at the current seek position.
@@ -110,7 +145,17 @@ devfile_write(struct Fd *fd, const void *buf, size_t n)
 	// remember that write is always allowed to write *fewer*
 	// bytes than requested.
 	// LAB 5: Your code here
-	panic("devfile_write not implemented");
+	ssize_t writesize;
+	size_t bufsize;
+	fsipcbuf.write.req_fileid=fd->fd_file.id;
+	bufsize=sizeof(fsipcbuf.write.req_buf);
+	if(n<bufsize)
+		bufsize=n;	
+	fsipcbuf.write.req_n=n;
+	memmove((void*)fsipcbuf.write.req_buf,buf,bufsize);
+	writesize=(ssize_t)fsipc(FSREQ_WRITE,NULL);
+	return writesize;
+	//panic("devfile_write not implemented");
 }
 
 static int
