@@ -1,0 +1,85 @@
+6828 decimal is  octal!
+Physical memory: 66556K available, base = 640K, extended = 65532K
+check_page_alloc() succeeded!
+page_check() succeeded!
+check_boot_pgdir() succeeded!
+enabled interrupts: 1 2
+	     Setup timer interrupts via 8259A
+enabled interrupts: 0 1 2
+	     unmasked timer interrupt
+FS is running
+FS can do I/O
+Device 1 presence: 1
+icode startup
+icode: open /motd
+open:fd=d0000000
+block cache is good
+superblock is good
+bitmap is good
+alloc_block is good
+file_open is good
+file_get_block is good
+file_flush is good
+file_truncate is good
+file rewrite is good
+serve_open 00001002 /motd 0x0
+serve_open:fileid=400
+sending success, page d0000000
+open:page=d0020000
+open:fileid=400
+icode: read /motd
+readsize=92
+This is /motd, the message of the day.
+
+Welcome to the JOS kernel, now with a file system!
+
+readsize=0
+icode: close /motd
+icode: spawn /init
+open:fd=d0000000
+serve_open 00001002 /init 0x0
+serve_open:fileid=401
+sending success, page d0001000
+open:page=d0020000
+open:fileid=401
+readsize=512
+readsize=4096
+readsize=4096
+readsize=4096
+readsize=4096
+readsize=4096
+readsize=4096
+readsize=3444
+readsize=4096
+readsize=4096
+readsize=976
+readsize=4096
+readsize=4096
+readsize=4096
+readsize=1936
+icode: exiting
+init: running
+init: data seems okay
+init: bss seems okay
+init: args: 'init' 'initarg1' 'initarg2'
+init: exiting
+Welcome to the JOS kernel monitor!
+Type 'help' for a list of commands.
+TRAP frame at 0xf01ed000
+  edi  0x00000000
+  esi  0x00000000
+  ebp  0xeebfdfd0
+  oesp 0xefbfffdc
+  ebx  0x00000000
+  edx  0x00000000
+  ecx  0x00000000
+  eax  0x0000000b
+  es   0x----0023
+  ds   0x----0023
+  trap 0x00000003 Breakpoint
+  err  0x00000000
+  eip  0x0080004a
+  cs   0x----001b
+  flag 0x00000296
+  esp  0xeebfdfc8
+  ss   0x----0023

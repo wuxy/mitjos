@@ -65,6 +65,7 @@ open(const char *path, int mode)
 	// LAB 5: Your code here.
 	struct Fd *fd;
 	int r;
+	void *page;
 	if((r=fd_alloc(&fd))<0){
 		fd_close(fd,0);
 		return r;
@@ -72,19 +73,20 @@ open(const char *path, int mode)
 	cprintf("open:fd=%x\n",fd);
 	strcpy(fsipcbuf.open.req_path,path);
 	fsipcbuf.open.req_omode=mode;
+	page=(void*)fd2data(fd);
 	if((r=fsipc(FSREQ_OPEN,(void*)fd))<0)
 	{
 		fd_close(fd,1);
 		return r;	
 	}
-	if((r=sys_page_map(0,(void*)fd,0,(void*)fd,PTE_P | PTE_W | PTE_U))<0)
+	cprintf("open:page=%x\n",page);
+	if((r=sys_page_map(0,(void*)fd,0,(void*)page,PTE_P | PTE_W | PTE_U))<0)
 	{
 		fd_close(fd,1);
 		return r;
 	}
-	//INDEX2DATA(fd->fd_file.id);
-	cprintf("fileid=%x\n",fd->fd_file.id);
-	return fd->fd_file.id;
+	cprintf("open:fileid=%x\n",fd->fd_file.id);
+	return fd2num(fd);
 	//panic("open not implemented");
 }
 
