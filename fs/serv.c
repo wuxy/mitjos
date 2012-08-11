@@ -109,7 +109,7 @@ serve_open(envid_t envid, struct Fsreq_open *req,
 	int r;
 	struct OpenFile *o;
 
-	//if (debug)
+	if (debug)
 		cprintf("serve_open %08x %s 0x%x\n", envid, req->req_path, req->req_omode);
 
 	// Copy in the path, making sure it's null-terminated
@@ -118,25 +118,25 @@ serve_open(envid_t envid, struct Fsreq_open *req,
 
 	// Find an open file ID
 	if ((r = openfile_alloc(&o)) < 0) {
-		//if (debug)
+		if (debug)
 			cprintf("openfile_alloc failed: %e", r);
 		return r;
 	}
 	fileid = r;
-	cprintf("serve_open:fileid=%x\n",fileid);
+	//cprintf("serve_open:fileid=%x\n",fileid);
 	// Open the file
 	if (req->req_omode & O_CREAT) {
 		if ((r = file_create(path, &f)) < 0) {
 			if (!(req->req_omode & O_EXCL) && r == -E_FILE_EXISTS)
 				goto try_open;
-			//if (debug)
+			if (debug)
 				cprintf("file_create failed: %e", r);
 			return r;
 		}
 	} else {
 try_open:
 		if ((r = file_open(path, &f)) < 0) {
-			//if (debug)
+			if (debug)
 				cprintf("file_open failed: %e", r);
 			return r;
 		}
@@ -145,7 +145,7 @@ try_open:
 	// Truncate
 	if (req->req_omode & O_TRUNC) {
 		if ((r = file_set_size(f, 0)) < 0) {
-			//if (debug)
+			if (debug)
 				cprintf("file_set_size failed: %e", r);
 			return r;
 		}
@@ -160,7 +160,7 @@ try_open:
 	o->o_fd->fd_dev_id = devfile.dev_id;
 	o->o_mode = req->req_omode;
 
-	//if (debug)
+	if (debug)
 		cprintf("sending success, page %08x\n", (uintptr_t) o->o_fd);
 
 	// Share the FD page with the caller

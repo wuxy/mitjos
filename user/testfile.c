@@ -89,11 +89,11 @@ umain(void)
 		panic("open /not-found: %e", r);
 	else if (r >= 0)
 		panic("open /not-found succeeded!");
-	cprintf("***open ***\n");
+	//cprintf("***open ***\n");
 	if ((r = open("/newmotd", O_RDONLY)) < 0)
 		panic("open /newmotd: %e", r);
 	fd = (struct Fd*) (0xD0000000 + r*PGSIZE);
-	cprintf("testfile:fd=%x\n",fd);
+	//cprintf("testfile:fd=%x\n",fd);
 	if (fd->fd_dev_id != 'f' || fd->fd_offset != 0 || fd->fd_omode != O_RDONLY)
 		panic("open did not fill struct Fd correctly\n");
 	cprintf("open is good\n");

@@ -70,7 +70,7 @@ open(const char *path, int mode)
 		fd_close(fd,0);
 		return r;
 	}
-	cprintf("open:fd=%x\n",fd);
+	//cprintf("open:fd=%x\n",fd);
 	strcpy(fsipcbuf.open.req_path,path);
 	fsipcbuf.open.req_omode=mode;
 	page=(void*)fd2data(fd);
@@ -79,13 +79,13 @@ open(const char *path, int mode)
 		fd_close(fd,1);
 		return r;	
 	}
-	cprintf("open:page=%x\n",page);
+	//cprintf("open:page=%x\n",page);
 	if((r=sys_page_map(0,(void*)fd,0,(void*)page,PTE_P | PTE_W | PTE_U))<0)
 	{
 		fd_close(fd,1);
 		return r;
 	}
-	cprintf("open:fileid=%x\n",fd->fd_file.id);
+	//cprintf("open:fileid=%x\n",fd->fd_file.id);
 	return fd2num(fd);
 	//panic("open not implemented");
 }
@@ -124,7 +124,7 @@ devfile_read(struct Fd *fd, void *buf, size_t n)
 	fsipcbuf.read.req_fileid=fd->fd_file.id;
 	fsipcbuf.read.req_n=n;
 	readsize=(ssize_t)fsipc(FSREQ_READ,&fsipcbuf);
-	cprintf("readsize=%d\n",readsize);
+	//cprintf("readsize=%d\n",readsize);
 	if(debug)
 		cprintf("devfile_read:buf1=%s\nbuf2=%s\n",(char*)&fsipcbuf,fsipcbuf.readRet.ret_buf);
 	if(readsize>0)
