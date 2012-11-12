@@ -106,7 +106,7 @@ static void boot_map_segment(pde_t *pgdir, uintptr_t la, size_t size, physaddr_t
 static void*
 boot_alloc(uint32_t n, uint32_t align)
 {
-	extern char end[];
+	extern char end[];//指向内核bss段的末尾
 	void *v;
 
 	// Initialize boot_freemem if this is the first time.
@@ -513,7 +513,6 @@ page_alloc(struct Page **pp_store)
 {
 	// Fill this function in
 	if(!LIST_EMPTY(&page_free_list)){
-		//page_initpp(*pp_store);
 		*pp_store=(struct Page*)LIST_FIRST(&page_free_list);
 		LIST_REMOVE(*pp_store,pp_link);
 		page_initpp(*pp_store);//需要初始化获得的空闲页面管理结构，真正对应物理页面的初始化在后面进行

@@ -7,12 +7,17 @@ enabled interrupts: 1 2
 	     Setup timer interrupts via 8259A
 enabled interrupts: 0 1 2
 	     unmasked timer interrupt
+PCI: 00:00.0: 8086:1237: class: 6.0 (Bridge device) irq: 0
+PCI: 00:01.0: 8086:7000: class: 6.1 (Bridge device) irq: 0
+PCI: 00:01.1: 8086:7010: class: 1.1 (Storage controller) irq: 0
+PCI: 00:01.3: 8086:7113: class: 6.80 (Bridge device) irq: 9
+PCI: 00:02.0: 1013:00b8: class: 3.0 (Display controller) irq: 0
+PCI: 00:03.0: 8086:1209: class: 2.0 (Network controller) irq: 11
+PCI function 00:03.0 (8086:1209) enabled
+PCI: 00:04.0: 1af4:1002: class: 5.0 (Memory controller) irq: 9
 FS is running
 FS can do I/O
 Device 1 presence: 1
-icode startup
-icode: open /motd
-open:fd=d0000000
 block cache is good
 superblock is good
 bitmap is good
@@ -22,64 +27,26 @@ file_get_block is good
 file_flush is good
 file_truncate is good
 file rewrite is good
-serve_open 00001002 /motd 0x0
-serve_open:fileid=400
-sending success, page d0000000
-open:page=d0020000
-open:fileid=400
-icode: read /motd
-readsize=92
-This is /motd, the message of the day.
-
-Welcome to the JOS kernel, now with a file system!
-
-readsize=0
-icode: close /motd
-icode: spawn /init
-open:fd=d0000000
-serve_open 00001002 /init 0x0
-serve_open:fileid=401
-sending success, page d0001000
-open:page=d0020000
-open:fileid=401
-readsize=512
-readsize=4096
-readsize=4096
-readsize=4096
-readsize=4096
-readsize=4096
-readsize=4096
-readsize=3444
-readsize=4096
-readsize=4096
-readsize=976
-readsize=4096
-readsize=4096
-readsize=4096
-readsize=1936
-icode: exiting
-init: running
-init: data seems okay
-init: bss seems okay
-init: args: 'init' 'initarg1' 'initarg2'
-init: exiting
+envid2env:id=1006
+user panic in ns at lib/ipc.c:83: send error:bad environment
 Welcome to the JOS kernel monitor!
 Type 'help' for a list of commands.
-TRAP frame at 0xf01ed000
-  edi  0x00000000
-  esi  0x00000000
-  ebp  0xeebfdfd0
+TRAP frame at 0xf02c80f8
+  edi  0x00000007
+  esi  0x00001006
+  ebp  0x08001e78
   oesp 0xefbfffdc
-  ebx  0x00000000
-  edx  0x00000000
-  ecx  0x00000000
-  eax  0x0000000b
+  ebx  0xfffffffe
+  edx  0x08001d28
+  ecx  0x00000001
+  eax  0x00000001
   es   0x----0023
   ds   0x----0023
   trap 0x00000003 Breakpoint
   err  0x00000000
-  eip  0x0080004a
+  eip  0x00800913
   cs   0x----001b
-  flag 0x00000296
-  esp  0xeebfdfc8
+  flag 0x00000212
+  esp  0x08001e50
   ss   0x----0023
+K> 

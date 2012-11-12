@@ -11,6 +11,7 @@
 #include <kern/sched.h>
 #include <kern/kclock.h>
 #include <kern/picirq.h>
+#include <kern/time.h>
 
 static struct Taskstate ts;
 
@@ -68,11 +69,11 @@ idt_init(void)
 	for(i=0;i<32;i++)
 		SETGATE(idt[i],0,GD_KT,vectors[i],0);//陷阱门
 	SETGATE(idt[3],0,GD_KT,vectors[3],3);//系统中断门
-	SETGATE(idt[4],0,GD_KT,vectors[4],3);//系统门
+	SETGATE(idt[4],0,GD_KT,vectors[4],3);//系统陷阱门
 	SETGATE(idt[5],0,GD_KT,vectors[5],3);
 	for(i=32;i<48;i++)
                SETGATE(idt[i],0,GD_KT,vectors[i],0);//中断门,外部硬件中断 16个
-	 SETGATE(idt[48],0,GD_KT,vectors[48],3);//系统调用,系统门
+	 SETGATE(idt[48],0,GD_KT,vectors[48],3);//系统调用,系统陷阱门
 	// Setup a TSS so that we get the right stack
 	// when we trap to the kernel.
 	ts.ts_esp0 = KSTACKTOP;
@@ -140,9 +141,14 @@ trap_dispatch(struct Trapframe *tf)
 		default:	
 		// Handle clock interrupts.
 		// LAB 4: Your code here.
+		// Add time tick increment to clock interrupts.
+		// LAB 6: Your code here.
 		if(tf->tf_trapno==IRQ_OFFSET + IRQ_TIMER){
+			time_tick();
 			sched_yield();//内核层的环境切换，需要在环境切换中思考
 		}
+
+
 		// Handle spurious interrupts
 		// The hardware sometimes raises these because of noise on the
 		// IRQ line or other reasons. We don't care.

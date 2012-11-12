@@ -11,8 +11,7 @@ xopen(const char *path, int mode)
 
 	strcpy(fsipcbuf.open.req_path, path);
 	fsipcbuf.open.req_omode = mode;
-	
-	//cprintf("\nxopen:envs[1].env_id=%x,&fsipcbuf=%x\n",envs[1].env_id,&fsipcbuf);
+
 	ipc_send(envs[1].env_id, FSREQ_OPEN, &fsipcbuf, PTE_P | PTE_W | PTE_U);
 	return ipc_recv(NULL, FVA, NULL);
 }
@@ -25,6 +24,7 @@ umain(void)
 	struct Fd fdcopy;
 	struct Stat st;
 	char buf[512];
+
 	// We open files manually first, to avoid the FD layer
 	if ((r = xopen("/not-found", O_RDONLY)) < 0 && r != -E_NOT_FOUND)
 		panic("serve_open /not-found: %e", r);
@@ -46,7 +46,6 @@ umain(void)
 	memset(buf, 0, sizeof buf);
 	if ((r = devfile.dev_read(FVA, buf, sizeof buf)) < 0)
 		panic("file_read: %e", r);
-	//cprintf("buf=%s\n",buf);
 	if (strcmp(buf, msg) != 0)
 		panic("file_read returned wrong data");
 	cprintf("file_read is good\n");
@@ -61,7 +60,7 @@ umain(void)
 	// FD page.
 	fdcopy = *FVA;
 	sys_page_unmap(0, FVA);
-	//cprintf("fdid=%x fd_offset=%x\n erron=%d",fdcopy.fd_file.id,fdcopy.fd_offset,-E_INVAL);
+
 	if ((r = devfile.dev_read(&fdcopy, buf, sizeof buf)) != -E_INVAL)
 		panic("serve_read does not handle stale fileids correctly: %e", r);
 	cprintf("stale fileid is good\n");
@@ -89,11 +88,10 @@ umain(void)
 		panic("open /not-found: %e", r);
 	else if (r >= 0)
 		panic("open /not-found succeeded!");
-	//cprintf("***open ***\n");
+
 	if ((r = open("/newmotd", O_RDONLY)) < 0)
 		panic("open /newmotd: %e", r);
 	fd = (struct Fd*) (0xD0000000 + r*PGSIZE);
-	//cprintf("testfile:fd=%x\n",fd);
 	if (fd->fd_dev_id != 'f' || fd->fd_offset != 0 || fd->fd_omode != O_RDONLY)
 		panic("open did not fill struct Fd correctly\n");
 	cprintf("open is good\n");

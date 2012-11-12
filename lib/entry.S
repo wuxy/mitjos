@@ -11,7 +11,10 @@ fsipcbuf:
 	.globl fdtab
 fdtab:
 	.space PGSIZE
-
+	.globl nsipcbuf
+	// page-aligned nsipcbuf for nsipc.c
+nsipcbuf:
+	.space PGSIZE
 
 // Define the global symbols 'envs', 'pages', 'vpt', and 'vpd'
 // so that they can be used in C as if they were ordinary global arrays.

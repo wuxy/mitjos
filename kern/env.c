@@ -23,7 +23,8 @@ static struct Env_list env_free_list;	// Free list
 // Converts an envid to an env pointer.
 // If checkperm is set, the specified environment must be either the
 // current environment or an immediate child of the current environment.
-//
+//当checkperm置1，表示环境envid是当前环境或者当前环境的儿子,增强安全性
+//当checkperm置0，表示环境envid可以是任一环境
 // RETURNS
 //   0 on success, -E_BAD_ENV on error.
 //   On success, sets *env_store to the environment.
@@ -33,7 +34,7 @@ int
 envid2env(envid_t envid, struct Env **env_store, bool checkperm)
 {
 	struct Env *e;
-
+	//0代表当前对象
 	// If envid is zero, return the current environment.
 	if (envid == 0) {
 		*env_store = curenv;

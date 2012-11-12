@@ -34,19 +34,29 @@ KERN_SRCFILES :=	kern/entry.S \
 			lib/readline.c \
 			lib/string.c
 
+# Source files for LAB6
+KERN_SRCFILES +=	kern/e100.c \
+			kern/pci.c \
+			kern/time.c
+
 # Only build files if they exist.
 KERN_SRCFILES := $(wildcard $(KERN_SRCFILES))
 
-# Binary program images to embed within the kernel.
 KERN_BINFILES :=	user/idle \
-			user/forktree \
 			user/pingpong \
 			user/primes \
-			user/testfile \
 			user/writemotd \
 			user/icode \
+			user/testtime \
+			user/testfile \
+			user/httpd \
+			user/echosrv \
+			user/echotest \
 			user/hello \
-			fs/fs
+			fs/fs \
+			net/testoutput \
+			net/testinput \
+			net/ns
 
 KERN_OBJFILES := $(patsubst %.c, $(OBJDIR)/%.o, $(KERN_SRCFILES))
 KERN_OBJFILES := $(patsubst %.S, $(OBJDIR)/%.o, $(KERN_OBJFILES))
@@ -55,8 +65,6 @@ KERN_OBJFILES := $(patsubst $(OBJDIR)/lib/%, $(OBJDIR)/kern/%, $(KERN_OBJFILES))
 KERN_BINFILES := $(patsubst %, $(OBJDIR)/%, $(KERN_BINFILES))
 
 # How to build kernel object files
-kern/vectors.S: kern/vectors.pl
-	$(V)perl kern/vectors.pl > kern/vectors.S
 $(OBJDIR)/kern/%.o: kern/%.c
 	@echo + cc $<
 	@mkdir -p $(@D)

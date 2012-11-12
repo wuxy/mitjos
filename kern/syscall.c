@@ -11,6 +11,7 @@
 #include <kern/syscall.h>
 #include <kern/console.h>
 #include <kern/sched.h>
+#include <kern/time.h>
 
 // Print a string to the system console.
 // The string is exactly 'len' characters long.
@@ -174,7 +175,7 @@ sys_env_set_pgfault_upcall(envid_t envid, void *func)
 	if(envid==0)
 		e=curenv;
 	else
-		if((r=envid2env(envid,&e,0))<0)
+		if((r=envid2env(envid,&e,1))<0)
 			return r;
 	e->env_pgfault_upcall=func;
 	return 0;
@@ -389,6 +390,10 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 	pte_t *pte;
 	uint32_t srcaddr=0;
 	//cprintf("sys_ipc_try_send:here envid=%x\n",envid);
+	//当一个环境正在等待接收一个信息，任何其他环境都能给它发送信息
+	//这不限于特定环境，也不需要发送环境与接收环境有父子关系，
+	//envid2env中的第3个参数置0
+	//下面用到了页面映射函数，因此也需要该函数中的envid2env中的第3个参数置0
 	if((envid==0)||(envid==curenv->env_id))
 	{
 		cprintf("the same send:envid=%x\n",curenv->env_id);
@@ -400,11 +405,11 @@ sys_ipc_try_send(envid_t envid, uint32_t value, void *srcva, unsigned perm)
 			cprintf("envid2env:id=%x\n",envid);
 			return r;
 		}
-	//cprintf("panduan:env_ipc_recving\n");
 	if(!e->env_ipc_recving)
 		return -E_IPC_NOT_RECV;
-	//cprintf("panduan is over\n");
-	if(srcva){
+	if(srcva){//在一次成功ipc后，sender保持自己地址空间srcva处原来物理页面映射
+		  //receiver将在自己地址空间dstva处获得同一物理页面映射
+		  //sender和receiver共享同一页面
 		srcaddr=(uint32_t)srcva;
 		if(srcaddr<(uint32_t)UTOP){
 			if(srcaddr&0xfff)
@@ -455,8 +460,14 @@ sys_ipc_recv(void *dstva)
 	//panic("sys_ipc_recv not implemented");
 	return 0;
 }
-
-
+// Return the current time.
+static int
+sys_time_msec(void) 
+{
+	// LAB 6: Your code here.
+	return time_msec();
+	//panic("sys_time_msec not implemented");
+}
 // Dispatches to the correct kernel function, passing the arguments.
 int32_t
 syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, uint32_t a5)
@@ -508,6 +519,8 @@ syscall(uint32_t syscallno, uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4, 
 		case SYS_ipc_recv:
 			return sys_ipc_recv((void*)a1);
 			break;
+		case SYS_time_msec:
+			return sys_time_msec();
 		default:
 			panic("syscall is not implemented");
 	}

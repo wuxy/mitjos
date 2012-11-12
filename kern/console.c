@@ -13,6 +13,7 @@ static void cons_intr(int (*proc)(void));
 static void cons_putc(int c);
 
 // Stupid I/O delay routine necessitated by historical PC design flaws
+// 延时5us
 static void
 delay(void)
 {
