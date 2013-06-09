@@ -6,6 +6,7 @@
 
 
 // Choose a user environment to run and run it.
+//根据调度算法选择待运行的进程，运行选择的进程
 void
 sched_yield(void)
 {

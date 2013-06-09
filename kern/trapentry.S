@@ -26,6 +26,7 @@
 /* Use TRAPHANDLER_NOEC for traps where the CPU doesn't push an error code.
  * It pushes a 0 in place of the error code, so the trap frame has the same
  * format in either case.
+ * .type name, @function 命令设置name为函数类型
  */
 #define TRAPHANDLER_NOEC(name, num)					\
 	.globl name;							\
@@ -46,7 +47,7 @@ TRAPHANDLER_NOEC(vector3,3);TRAPHANDLER_NOEC(vector4,4);TRAPHANDLER_NOEC(vector5
 TRAPHANDLER_NOEC(vector6,6);TRAPHANDLER_NOEC(vector7,7);TRAPHANDLER(vector8,8);
 TRAPHANDLER_NOEC(vector9,9);TRAPHANDLER(vector10,10);TRAPHANDLER(vector11,11);
 TRAPHANDLER(vector12,12);TRAPHANDLER(vector13,13);TRAPHANDLER(vector14,14);
-TRAPHANDLER_NOEC(vector15,15);TRAPHANDLER_NOEC(vector16,16);TRAPHANDLER_NOEC(vector17,17);
+TRAPHANDLER_NOEC(vector15,15);TRAPHANDLER_NOEC(vector16,16);TRAPHANDLER(vector17,17);
 TRAPHANDLER_NOEC(vector18,18);TRAPHANDLER_NOEC(vector19,19);TRAPHANDLER_NOEC(vector20,20);
 TRAPHANDLER_NOEC(vector21,21);TRAPHANDLER_NOEC(vector22,22);TRAPHANDLER_NOEC(vector23,23);
 TRAPHANDLER_NOEC(vector24,24);TRAPHANDLER_NOEC(vector25,25);TRAPHANDLER_NOEC(vector26,26);
@@ -146,7 +147,7 @@ _alltraps:
 	pushl %esp /*esp指向一个Trapframe的结构体*/
 	call trap
 	addl $4,%esp
-
+/*下面的代码没有用到，中断处理过程在trap中调用env_run返回被中断应用程序*/
 .globl trapret
 trapret:
 	addl $4,%esp /*弹出调用trapret时cpu压入的返回地址*/

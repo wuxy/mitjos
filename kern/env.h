@@ -27,7 +27,7 @@ int	envid2env(envid_t envid, struct Env **env_store, bool checkperm);
 void	env_run(struct Env *e) __attribute__((noreturn));
 void	env_pop_tf(struct Trapframe *tf) __attribute__((noreturn));
 
-// For the grading script
+// For the grading script 脚本使用的
 #define ENV_CREATE2(start, size)	{		\
 	extern uint8_t start[], size[];			\
 	env_create(start, (int)size);			\

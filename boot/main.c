@@ -40,7 +40,7 @@ bootmain(void)
 {
 	struct Proghdr *ph, *eph;
 
-	// read 1st page off disk
+	// read 1st page off disk,将磁盘的第一页读入内存0x10000处
 	readseg((uint32_t) ELFHDR, SECTSIZE*8, 0);
 
 	// is this a valid ELF?
@@ -71,7 +71,13 @@ readseg(uint32_t va, uint32_t count, uint32_t offset)
 {
 	uint32_t end_va;
 
-	va &= 0xFFFFFF;
+	va &= 0xFFFFFF;	//JOS内核镜像的链接地址是0xf0100000,加载地址是0x100000
+			//JOS的虚拟地址就是链接地址从0xf0100000,由于这时候没有开启
+			//分页机制，所以线性地址和物理地址相同，都是加载地址。
+			//由于虚拟地址和线性地址不同，需要在kernel/entry.S中
+			//设置GDT的段描述符中设置段的基地址为0x10000000(-KERNBASE).
+			//在开启分页以前，只进行段式地址转换，得到的线性地址就是物理
+			//地址.
 	end_va = va + count;
 	
 	// round down to sector boundary

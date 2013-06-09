@@ -15,13 +15,13 @@ SECTIONS
 	}
 
 	PROVIDE(etext = .);	/* Define the 'etext' symbol to this value */
-
+				/* etext符号对应的地址被定义为.text section之后的第一个字节地址*/
 	.rodata : {
 		*(.rodata .rodata.* .gnu.linkonce.r.*)
 	}
 
 	/* Adjust the address for the data segment to the next page */
-	. = ALIGN(0x1000);
+	. = ALIGN(0x1000); /*页面对齐*/
 
 	.data : {
 		*(.data)
@@ -34,13 +34,18 @@ SECTIONS
 	}
 
 	PROVIDE(end = .);
-
+	/* PROVIDE关键字：用于定义在目标文件内被引用，但没有任何目标文件内被定义的符号*/
 
 	/* Place debugging symbols so that they can be found by
 	 * the kernel debugger.
 	 * Specifically, the four words at 0x200000 mark the beginning of
 	 * the stabs, the end of the stabs, the beginning of the stabs
 	 * string table, and the end of the stabs string table, respectively.
+	 */
+	/* 调试信息STAB（符号表），保存在ELF文件的.stab和.stabstr部分
+	 * .stab，包含一组具有固定长度的结构，每个stab包含一个结构
+	 * .stabstr，包含所有可变长度的字符串，这些符号在.stab部分，
+	 *           通过stab引用
 	 */
 
 	.stab_info 0x200000 : {

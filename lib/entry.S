@@ -38,7 +38,7 @@ _start:
 	jne args_exist
 
 	// If not, push dummy argc/argv arguments.
-	// This happens when we are loaded by the kernel,
+	// This happens when we are loaded by the kernel,内核启动该进程，内核不知道传递什么参数
 	// because the kernel does not know about passing arguments.
 	pushl $0
 	pushl $0

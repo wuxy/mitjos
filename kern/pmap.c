@@ -24,8 +24,8 @@ static char* boot_freemem;	// Pointer to next byte of free mem
 struct Page* pages;		// Virtual address of physical page array
 static struct Page_list page_free_list;	// Free list of physical pages
 
-// Global descriptor table.
-//
+// Global descriptor table.全局描述符表
+//内核层的CPL是0,用户层的CPL是3
 // The kernel and user segments are identical (except for the DPL).
 // To load the SS register, the CPL must equal the DPL.  Thus,
 // we must duplicate the segments for the user and the kernel.
@@ -162,9 +162,10 @@ i386_vm_init(void)
 	//////////////////////////////////////////////////////////////////////
 	// Recursively insert PD in itself as a page table, to form
 	// a virtual page table at virtual address VPT.
+	//把页目录表当成一个页表，并填写相应页目录项.该虚拟页表在VPT处。
 	// (For now, you don't have understand the greater purpose of the
 	// following two lines.)
-
+	//内核使用的当前页表，内核可读写，用户无法访问
 	// Permissions: kernel RW, user NONE
 	pgdir[PDX(VPT)] = PADDR(pgdir)|PTE_W|PTE_P;
 
@@ -229,8 +230,10 @@ i386_vm_init(void)
 	boot_map_segment(boot_pgdir,KSTACKTOP-KSTKSIZE,KSTKSIZE,PADDR(bootstack),PTE_W |PTE_P);
 	//////////////////////////////////////////////////////////////////////
 	// Map all of physical memory at KERNBASE. 
-	// Ie.  the VA range [KERNBASE, 2^32) should map to
-	//      the PA range [0, 2^32 - KERNBASE)
+	// Ie.  the VA range [KERNBASE, 2^32-1) should map to
+	//      the PA range [0, 2^32-1 - KERNBASE)
+	// 虚拟地址范围[0xf0000000,0xffffffff]===>物理地址范围[0x0,0x0fffffff]
+	// 内核的链接地址的开始地址是0xf0100000===>物理地址0x100000
 	// We might not have 2^32 - KERNBASE bytes of physical memory, but
 	// we just set up the mapping anyway.
 	// Permissions: kernel RW, user NONE
@@ -260,7 +263,7 @@ i386_vm_init(void)
 	// Install page table.
 	lcr3(boot_cr3);
 
-	// Turn on paging.
+	// Turn on paging.完成虚拟内存相关设置后，开启分页机制
 	cr0 = rcr0();
 	cr0 |= CR0_PE|CR0_PG|CR0_AM|CR0_WP|CR0_NE|CR0_TS|CR0_EM|CR0_MP;
 	cr0 &= ~(CR0_TS|CR0_EM);
@@ -269,7 +272,10 @@ i386_vm_init(void)
 	// Current mapping: KERNBASE+x => x => x.
 	// (x < 4MB so uses paging pgdir[0])
 
-	// Reload all segment registers.
+	// Reload all segment registers.初始化GDT,将GDT这中
+	//段基地址设置为0，关闭分段机制，这时候kernel的
+	//虚拟地址和线性地址是一样的，都是链接地址。
+	//内核的物理地址是加载地址。
 	asm volatile("lgdt gdt_pd");
 	asm volatile("movw %%ax,%%gs" :: "a" (GD_UD|3));
 	asm volatile("movw %%ax,%%fs" :: "a" (GD_UD|3));
@@ -585,7 +591,7 @@ pgdir_walk(pde_t *pgdir, const void *va, int create)
 			return NULL;
 		if(page_alloc(&pgfortab)<0)
 			return NULL;
-		pgfortab->pp_ref=1;//设置引用标志为1,这个页做为了页表
+		pgfortab->pp_ref=1;//设置引用标志为1,这个页作为了页表
 		//cprintf("welcome to pgdir_walk:va=%x pgfortab=%x\n",va,KADDR(page2pa(pgfortab)));
 		pgtab = (pte_t*)KADDR(page2pa(pgfortab));//获取页面物理地址,访问页表要用虚拟地址
 		

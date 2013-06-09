@@ -7,7 +7,7 @@
 #include <kern/pmap.h>
 #include <kern/env.h>
 
-extern const struct Stab __STAB_BEGIN__[];	// Beginning of stabs table
+extern const struct Stab __STAB_BEGIN__[];	// Beginning of stabs table 链接脚本kernel.lds中定义该符号
 extern const struct Stab __STAB_END__[];	// End of stabs table
 extern const char __STABSTR_BEGIN__[];		// Beginning of string table
 extern const char __STABSTR_END__[];		// End of string table

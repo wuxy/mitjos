@@ -198,7 +198,7 @@ echo "using echo server port: $echosrv_port"
 qemuopts="$qemuopts -net user -net nic,model=i82559er"
 qemuopts="$qemuopts -redir tcp:$echosrv_port::7 -redir tcp:$http_port::80"
 qemuopts="$qemuopts -redir udp:$echosrv_port::7"
-#qemuopts="$qemuopts -pcap slirp.cap"
+qemuopts="$qemuopts -pcap slirp.cap"
 
 pts=5
 runtest1 -tag 'testtime' testtime -DTEST_NO_NS \

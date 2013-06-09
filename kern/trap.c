@@ -63,23 +63,30 @@ void
 idt_init(void)
 {
 	extern struct Segdesc gdt[];
-	
+	/*中断门和陷阱门的DPL只有使用INT n指令引起中断/异常时才检查，
+	 *硬件产生的中断/异常不检查。 
+	 *这里初始化使用的都是中断门。中断发生后，处理器器自动复位
+	 *EFLAGES中的IF位，在内核中中断是关闭的。
+	 */
 	// LAB 3: Your code here.
 	int i;
-	for(i=0;i<32;i++)
+	for(i=0;i<IRQ_OFFSET;i++)
 		SETGATE(idt[i],0,GD_KT,vectors[i],0);//陷阱门
-	SETGATE(idt[3],0,GD_KT,vectors[3],3);//系统中断门
-	SETGATE(idt[4],0,GD_KT,vectors[4],3);//系统陷阱门
-	SETGATE(idt[5],0,GD_KT,vectors[5],3);
-	for(i=32;i<48;i++)
+	SETGATE(idt[T_BRKPT],0,GD_KT,vectors[T_BRKPT],3);//系统中断门,断点异常，DPL＝3
+	SETGATE(idt[T_OFLOW],0,GD_KT,vectors[T_OFLOW],3);//系统陷阱门，溢出异常，DPL＝3
+	SETGATE(idt[T_BOUND],0,GD_KT,vectors[T_BOUND],3);
+	for(i=IRQ_OFFSET;i<IRQ_OFFSET+MAX_IRQS;i++)
                SETGATE(idt[i],0,GD_KT,vectors[i],0);//中断门,外部硬件中断 16个
-	 SETGATE(idt[48],0,GD_KT,vectors[48],3);//系统调用,系统陷阱门
+	 SETGATE(idt[T_SYSCALL],0,GD_KT,vectors[T_SYSCALL],3);//系统调用,系统陷阱门，DPL＝3
 	// Setup a TSS so that we get the right stack
 	// when we trap to the kernel.
+	//在内核模式中，处理器使用TSS中的ESP0和SS0字段定义内核栈
+	//JOS不使用TSS的其他字段
 	ts.ts_esp0 = KSTACKTOP;
 	ts.ts_ss0 = GD_KD;
 
-	// Initialize the TSS field of the gdt.
+	// Initialize the TSS field of the gdt.初始化任务状态段，
+	//该段存放在GDT表中
 	gdt[GD_TSS >> 3] = SEG16(STS_T32A, (uint32_t) (&ts),
 					sizeof(struct Taskstate), 0);
 	gdt[GD_TSS >> 3].sd_s = 0;
@@ -253,17 +260,19 @@ page_fault_handler(struct Trapframe *tf)
 
 	// LAB 4: Your code here.
 	struct UTrapframe *utf;
+	size_t utf_size;
 	if((tf->tf_err&FEC_U)&&curenv->env_pgfault_upcall)
 	{
-		user_mem_assert(curenv,(void*)(UXSTACKTOP-0x34),0x34,0);
+		utf_size = sizeof(struct UTrapframe);
+		user_mem_assert(curenv,(void*)(UXSTACKTOP-utf_size),utf_size,0);
 		if(tf->tf_esp>(UXSTACKTOP-PGSIZE)&&tf->tf_esp<UXSTACKTOP)
 		{
-			utf=(struct UTrapframe*)(tf->tf_esp-0x38);
+			utf=(struct UTrapframe*)(tf->tf_esp-utf_size-sizeof(utf->utf_eip));
 					//这一步处理page fault handler中出现缺页异常
 					//先压入一32位空值，再压入UTrapframe,这个空出来的位置在_pgfault_upcall中存放utf->utf_eip
 		}
 		else{
-			utf = (struct UTrapframe*)(UXSTACKTOP-0x34);   
+			utf = (struct UTrapframe*)(UXSTACKTOP-utf_size);   
 		}
 					//在用户异常栈上设置一个页故障帧栈
 		utf->utf_fault_va=fault_va;

@@ -22,12 +22,12 @@ struct Elf {
 };
 
 struct Proghdr {
-	uint32_t p_type;
-	uint32_t p_offset;
-	uint32_t p_va;
-	uint32_t p_pa;
-	uint32_t p_filesz;
-	uint32_t p_memsz;
+	uint32_t p_type;	/*此数组元素描述的段类型*/
+	uint32_t p_offset;	/*从文件头到该段第一个字节的偏移*/
+	uint32_t p_va;		/*段的第一个字节将被放在内存中的虚拟地址*/
+	uint32_t p_pa;		/**/
+	uint32_t p_filesz;	/*段在文件映像中所占字节数*/
+	uint32_t p_memsz;	/*段在内存映像中占用的字节数*/
 	uint32_t p_flags;
 	uint32_t p_align;
 };

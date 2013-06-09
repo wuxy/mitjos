@@ -35,7 +35,7 @@ i386_init(void)
 	// Lab 2 memory management initialization functions
 	i386_detect_memory();
 	i386_vm_init();
-
+	//panic("i386_init");
 	// Lab 3 user environment initialization functions
 	env_init();
 	idt_init();

@@ -41,6 +41,8 @@ typedef int32_t off_t;
 typedef uint64_t bfd_vma;
 typedef int64_t bfd_signed_vma;
 typedef uint8_t bfd_byte;
+//network driver Lab6:your code here
+typedef uint32_t dma_addr_t;
 // Efficient min and max operations
 #define MIN(_a, _b)						\
 ({								\

@@ -101,7 +101,7 @@ env_setup_vm(struct Env *e)
 {
 	int i, r;
 	struct Page *p = NULL;
-
+	
 	// Allocate a page for the page directory
 	if ((r = page_alloc(&p)) < 0)
 		return r;
@@ -125,10 +125,12 @@ env_setup_vm(struct Env *e)
 	//    - The functions in kern/pmap.h are handy.
 
 	// LAB 3: Your code here.
-	e->env_cr3=page2pa(p);
+	e->env_cr3=page2pa(p);//每个进程有自己的页目录表
 	e->env_pgdir=(pde_t*)page2kva(p);
+
 	p->pp_ref++;
 	memset(e->env_pgdir,0,PGSIZE);//initialize env's pgdir
+
 	for(i=PDX(UTOP);i<NPDENTRIES;i++)//内核部分映射，直接从boot_pgdir拷贝
 		e->env_pgdir[i]=boot_pgdir[i];
 	// VPT and UVPT map the env's own page table, with
@@ -156,7 +158,7 @@ env_alloc(struct Env **newenv_store, envid_t parent_id)
 
 	if (!(e = LIST_FIRST(&env_free_list)))
 		return -E_NO_FREE_ENV;
-
+	//为进程分配一个物理页面作为页目录表，并设置该页目录表和相关页表
 	// Allocate and set up the page directory for this environment.
 	if ((r = env_setup_vm(e)) < 0)
 		return r;
@@ -176,6 +178,7 @@ env_alloc(struct Env **newenv_store, envid_t parent_id)
 	// to prevent the register values
 	// of a prior environment inhabiting this Env structure
 	// from "leaking" into our new environment.
+	//清空进程的上下文
 	memset(&e->env_tf, 0, sizeof(e->env_tf));
 
 	// Set up appropriate initial values for the segment registers.
@@ -183,10 +186,10 @@ env_alloc(struct Env **newenv_store, envid_t parent_id)
 	// GD_UT is the user text segment selector (see inc/memlayout.h).
 	// The low 2 bits of each segment register contains the
 	// Requestor Privilege Level (RPL); 3 means user mode.
-	e->env_tf.tf_ds = GD_UD | 3;
+	e->env_tf.tf_ds = GD_UD | 3;//初始化段寄存器
 	e->env_tf.tf_es = GD_UD | 3;
 	e->env_tf.tf_ss = GD_UD | 3;
-	e->env_tf.tf_esp = USTACKTOP;
+	e->env_tf.tf_esp = USTACKTOP;//初始化用户态栈顶指针
 	e->env_tf.tf_cs = GD_UT | 3;
 	// You will set e->env_tf.tf_eip later.
 
@@ -308,19 +311,23 @@ load_icode(struct Env *e, uint8_t *binary, size_t size)
 	if(elfhdr->e_magic!=ELF_MAGIC)
 		panic("This binary is not ELF format!\n");
 	ph = (struct Proghdr*)(binary+elfhdr->e_phoff);
-	eph = ph+elfhdr->e_phnum;
-	for(;ph<eph;ph++){
+	                /*e_phoff：程序头部表格的偏移量*/
+	eph = ph+elfhdr->e_phnum;/*e_phnum：程序头部表格的表项数目*/
+	for(;ph<eph;ph++){       /*程序头部：描述与程序执行直接相关的目标文件结构信息。
+				  *用来在文件中定位各个段的映像。
+				  */
 		if(ph->p_type == ELF_PROG_LOAD)
 		{
 			segment_alloc(e,(void*)ph->p_va,ph->p_memsz);
 			//cprintf("p_va=%x binary+p_offset=%x filesz=%x memsz=%x\n",ph->p_va,binary+ph->p_offset,ph->p_filesz,ph->p_memsz);
+			/*如果p_memsz大于p_filesz，剩余的字节要清零。p_filesz不能大于p_memsz*/
 			memset((void*)(ph->p_va+ph->p_filesz),0,ph->p_memsz-ph->p_filesz);
 			memmove((void*)ph->p_va,(void*)(binary+ph->p_offset),ph->p_filesz);	
 		}
 	} 
 	//cprintf("memsize=%x filesize=%x\n",ph->p_memsz,ph->p_filesz);
 	//cprintf("e_entry=%x\n",elfhdr->e_entry);
-	e->env_tf.tf_eip=elfhdr->e_entry;
+	e->env_tf.tf_eip=elfhdr->e_entry;//用户态进程的第一条指令地址保存在e->env_tf.tf_eip中
 	// Now map one page for the program's initial stack
 	// at virtual address USTACKTOP - PGSIZE.
 
@@ -339,7 +346,7 @@ load_icode(struct Env *e, uint8_t *binary, size_t size)
 // This function is ONLY called during kernel initialization,
 // before running the first user-mode environment.
 // The new env's parent ID is set to 0.
-//
+//由JOS内核创建用户进程
 void
 env_create(uint8_t *binary, size_t size)
 {
@@ -445,7 +452,7 @@ env_pop_tf(struct Trapframe *tf)
 // Note: if this is the first call to env_run, curenv is NULL.
 //
 // This function does not return.
-//
+//JOS内核启动一个进程，并切换到用户态，运行该进程
 void
 env_run(struct Env *e)
 {
@@ -463,9 +470,16 @@ env_run(struct Env *e)
 	//	e->env_tf to sensible values.
 	
 	// LAB 3: Your code here.
-	curenv=e;
+	if(e==NULL)
+	{
+		panic("This is bad env,panic in env_run");
+	}
+	if(e!=curenv)//如果e指向当前进程，就不需要切换地址空间，lcr3会刷新TLB
+	{
+		curenv=e;
+		lcr3(curenv->env_cr3);//切换到进程的地址空间
+	}
 	curenv->env_runs++;
-	lcr3(curenv->env_cr3);
 	//cprintf("\nenv_run:curenvid=%x\n",curenv->env_id);
 	env_pop_tf(&curenv->env_tf);
 	//panic("env_run not yet implemented");

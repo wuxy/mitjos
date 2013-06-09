@@ -4,7 +4,7 @@
 #include <inc/memlayout.h>
 #include <inc/trap.h>
 
-# Shift Right Logical 
+# Shift Right Logical 右移位
 #define SRL(val, shamt)		(((val) >> (shamt)) & ~(-1 << (32 - (shamt))))
 
 
@@ -75,24 +75,24 @@ spin:	jmp	spin
 # See <inc/memlayout.h> for a complete description of these two symbols.
 ###################################################################
 .data
-	.globl	vpt
-	.set	vpt, VPT
-	.globl	vpd
+	.globl	vpt			#定义为全局符号
+	.set	vpt, VPT		#设定常数，给vpt赋值
+	.globl	vpd			
 	.set	vpd, (VPT + SRL(VPT, 10))
 
 
 ###################################################################
-# boot stack
+# boot stack启动时使用的堆栈
 ###################################################################
 	.p2align	PGSHIFT		# force page alignment
 	.globl		bootstack
 bootstack:
-	.space		KSTKSIZE
-	.globl		bootstacktop   
+	.space		KSTKSIZE	#该汇编命令产生KSTKSIZE字节，填充0
+	.globl		bootstacktop    
 bootstacktop:
 
 ###################################################################
-# setup the GDT	
+# setup the GDT	,boot loader的临时全局描述符表
 ###################################################################
 	.p2align	2		# force 4 byte alignment
 mygdt:

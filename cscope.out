@@ -1,4 +1,4 @@
-cscope 15 /home/mitjos -q 0000007350 0001258208
+cscope 15 /home/wuxy/mitjos -q 0000007355 0001259123
 	@boot/main.c
 
 1 
@@ -14105,13 +14105,9 @@ cÚs_šŒ
 c
 );
 
-17 
+18 
 	$d–ay
 ()
-
-19 
-	`šb
-(0x84);
 
 20 
 	`šb
@@ -14126,106 +14122,110 @@ c
 (0x84);
 
 23 
+	`šb
+(0x84);
+
+24 
 	}
 }
 
-27 
+28 
 	#COM1
  0x3F8
 
 	)
 
-29 
+30 
 	#COM_RX
  0
 
-30 
+31 
 	#COM_TX
  0
 
-31 
+32 
 	#COM_DLL
  0
 
-32 
+33 
 	#COM_DLM
  1
 
-33 
+34 
 	#COM_IER
  1
 
-34 
+35 
 	#COM_IER_RDI
  0x01
 
-35 
+36 
 	#COM_IIR
  2
 
-36 
+37 
 	#COM_FCR
  2
 
-37 
+38 
 	#COM_LCR
  3
 
-38 
+39 
 	#COM_LCR_DLAB
  0x80
 
-39 
+40 
 	#COM_LCR_WLEN8
  0x03
 
-40 
+41 
 	#COM_MCR
  4
 
-41 
+42 
 	#COM_MCR_RTS
  0x02
 
-42 
+43 
 	#COM_MCR_DTR
  0x01
 
-43 
+44 
 	#COM_MCR_OUT2
  0x08
 
-44 
+45 
 	#COM_LSR
  5
 
-45 
+46 
 	#COM_LSR_DATA
  0x01
 
-46 
+47 
 	#COM_LSR_TXRDY
  0x20
 
-47 
+48 
 	#COM_LSR_TSRE
  0x40
 
-48 
+49 
 
 	)
 
-49 
+50 
 boÞ
  
 	g£rŸl_exi¡s
 ;
 
-52 
+53 
 	$£rŸl_´oc_d©a
 ()
 
-54 ià(!(
+55 ià(!(
 	`šb
 (
 COM1
@@ -14235,7 +14235,7 @@ COM_LSR
 COM_LSR_DATA
 ))
 
-56  
+57  
 	`šb
 (
 COM1
@@ -14243,43 +14243,43 @@ COM1
 COM_RX
 );
 
-57 
+58 
 	}
 }
 
-60 
+61 
 	$£rŸl_šŒ
 ()
 
-62 ià(
+63 ià(
 £rŸl_exi¡s
 )
 
-63 
+64 
 	`cÚs_šŒ
 (
 £rŸl_´oc_d©a
 );
 
-64 
+65 
 	}
 }
 
-67 
+68 
 	$£rŸl_putc
 (
 c
 )
 
-69 
+70 
 i
 ;
 
-71 
+72 
 i
  = 0;
 
-72 !(
+73 !(
 	`šb
 (
 COM1
@@ -14291,15 +14291,15 @@ COM_LSR_TXRDY
 i
  < 12800;
 
-73 
+74 
 i
 ++)
 
-74 
+75 
 	`d–ay
 ();
 
-76 
+77 
 	`outb
 (
 COM1
@@ -14309,15 +14309,15 @@ COM_TX
 c
 );
 
-77 
+78 
 	}
 }
 
-80 
+81 
 	$£rŸl_š™
 ()
 
-83 
+84 
 	`outb
 (
 COM1
@@ -14325,7 +14325,7 @@ COM1
 COM_FCR
 , 0);
 
-86 
+87 
 	`outb
 (
 COM1
@@ -14335,7 +14335,7 @@ COM_LCR
 COM_LCR_DLAB
 );
 
-87 
+88 
 	`outb
 (
 COM1
@@ -14345,7 +14345,7 @@ COM_DLL
 ušt8_t
 ) (115200 / 9600));
 
-88 
+89 
 	`outb
 (
 COM1
@@ -14353,7 +14353,7 @@ COM1
 COM_DLM
 , 0);
 
-91 
+92 
 	`outb
 (
 COM1
@@ -14365,7 +14365,7 @@ COM_LCR_WLEN8
 COM_LCR_DLAB
 );
 
-94 
+95 
 	`outb
 (
 COM1
@@ -14373,7 +14373,7 @@ COM1
 COM_MCR
 , 0);
 
-96 
+97 
 	`outb
 (
 COM1
@@ -14383,7 +14383,7 @@ COM_IER
 COM_IER_RDI
 );
 
-100 
+101 
 £rŸl_exi¡s
  = (
 	`šb
@@ -14393,7 +14393,7 @@ COM1
 COM_LSR
 ) != 0xFF);
 
-101 (è
+102 (è
 	`šb
 (
 COM1
@@ -14401,7 +14401,7 @@ COM1
 COM_IIR
 );
 
-102 (è
+103 (è
 	`šb
 (
 COM1
@@ -14409,85 +14409,85 @@ COM1
 COM_RX
 );
 
-104 
+105 
 	}
 }
 
-113 
+114 
 	$Ít_putc
 (
 c
 )
 
-115 
+116 
 i
 ;
 
-117 
+118 
 i
  = 0; !(
 	`šb
 (0x378+1) & 0x80) && i < 12800; i++)
 
-118 
+119 
 	`d–ay
 ();
 
-119 
+120 
 	`outb
 (0x378+0, 
 c
 );
 
-120 
+121 
 	`outb
 (0x378+2, 0x08|0x04|0x01);
 
-121 
+122 
 	`outb
 (0x378+2, 0x08);
 
-122 
+123 
 	}
 }
 
-129 
+130 
 	gaddr_6845
 ;
 
-130 
+131 
 ušt16_t
  *
 	güt_buf
 ;
 
-131 
+132 
 ušt16_t
  
 	güt_pos
 ;
 
-134 
+135 
 	$cga_š™
 ()
 
-136 vÞ©ž
+137 vÞ©ž
 ušt16_t
  *
 ý
 ;
 
-137 
+138 
 ušt16_t
  
 was
 ;
 
-138 
+139 
 pos
 ;
 
-140 
+141 
 ý
  = (
 ušt16_t
@@ -14497,23 +14497,23 @@ KERNBASE
 CGA_BUF
 );
 
-141 
+142 
 was
  = *
 ý
 ;
 
-142 *
+143 *
 ý
  = (
 ušt16_t
 ) 0xA55A;
 
-143 ià(*
+144 ià(*
 ý
  != 0xA55A) {
 
-144 
+145 
 ý
  = (
 ušt16_t
@@ -14523,31 +14523,31 @@ KERNBASE
 MONO_BUF
 );
 
-145 
+146 
 addr_6845
  = 
 MONO_BASE
 ;
 
-147 *
+148 *
 ý
  = 
 was
 ;
 
-148 
+149 
 addr_6845
  = 
 CGA_BASE
 ;
 
-152 
+153 
 	`outb
 (
 addr_6845
 , 14);
 
-153 
+154 
 pos
  = 
 	`šb
@@ -14555,13 +14555,13 @@ pos
 addr_6845
  + 1) << 8;
 
-154 
+155 
 	`outb
 (
 addr_6845
 , 15);
 
-155 
+156 
 pos
  |ð
 	`šb
@@ -14569,7 +14569,7 @@ pos
 addr_6845
  + 1);
 
-157 
+158 
 üt_buf
  = (
 ušt16_t
@@ -14577,43 +14577,43 @@ ušt16_t
 ý
 ;
 
-158 
+159 
 üt_pos
  = 
 pos
 ;
 
-159 
+160 
 	}
 }
 
-164 
+165 
 	$cga_putc
 (
 c
 )
 
-167 ià(!(
+168 ià(!(
 c
  & ~0xFF))
 
-168 
+169 
 c
  |= 0x0700;
 
-170 
+171 
 c
  & 0xff) {
 
-172 ià(
+173 ià(
 üt_pos
  > 0) {
 
-173 
+174 
 üt_pos
 --;
 
-174 
+175 
 üt_buf
 [
 üt_pos
@@ -14621,21 +14621,17 @@ c
 c
  & ~0xff) | ' ';
 
-178 
+179 
 üt_pos
  +ð
 CRT_COLS
 ;
 
-181 
+182 
 üt_pos
  -ð(üt_po % 
 CRT_COLS
 );
-
-184 
-	`cÚs_putc
-(' ');
 
 185 
 	`cÚs_putc
@@ -14653,7 +14649,11 @@ CRT_COLS
 	`cÚs_putc
 (' ');
 
-191 
+189 
+	`cÚs_putc
+(' ');
+
+192 
 üt_buf
 [
 üt_pos
@@ -14661,17 +14661,17 @@ CRT_COLS
 c
 ;
 
-196 ià(
+197 ià(
 üt_pos
  >ð
 CRT_SIZE
 ) {
 
-197 
+198 
 i
 ;
 
-199 
+200 
 	`memmove
 (
 üt_buf
@@ -14683,7 +14683,7 @@ CRT_SIZE
 ušt16_t
 ));
 
-200 
+201 
 i
  = 
 CRT_SIZE
@@ -14691,25 +14691,25 @@ CRT_SIZE
 CRT_COLS
 ; i < CRT_SIZE; i++)
 
-201 
+202 
 üt_buf
 [
 i
 ] = 0x0700 | ' ';
 
-202 
+203 
 üt_pos
  -ð
 CRT_COLS
 ;
 
-206 
+207 
 	`outb
 (
 addr_6845
 , 14);
 
-207 
+208 
 	`outb
 (
 addr_6845
@@ -14717,13 +14717,13 @@ addr_6845
 üt_pos
  >> 8);
 
-208 
+209 
 	`outb
 (
 addr_6845
 , 15);
 
-209 
+210 
 	`outb
 (
 addr_6845
@@ -14731,239 +14731,239 @@ addr_6845
 üt_pos
 );
 
-210 
+211 
 	}
 }
 
-215 
+216 
 	#NO
  0
 
 	)
 
-217 
+218 
 	#SHIFT
  (1<<0)
 
 	)
 
-218 
+219 
 	#CTL
  (1<<1)
 
 	)
 
-219 
+220 
 	#ALT
  (1<<2)
 
 	)
 
-221 
+222 
 	#CAPSLOCK
  (1<<3)
 
 	)
 
-222 
+223 
 	#NUMLOCK
  (1<<4)
 
 	)
 
-223 
+224 
 	#SCROLLLOCK
  (1<<5)
 
 	)
 
-225 
+226 
 	#E0ESC
  (1<<6)
 
 	)
 
-227 
+228 
 ušt8_t
  
 	gshiácode
 [256] =
 
-229 [0x1D] = 
+230 [0x1D] = 
 CTL
 ,
 
-230 [0x2A] = 
+231 [0x2A] = 
 SHIFT
 ,
 
-231 [0x36] = 
+232 [0x36] = 
 SHIFT
 ,
 
-232 [0x38] = 
+233 [0x38] = 
 ALT
 ,
 
-233 [0x9D] = 
+234 [0x9D] = 
 CTL
 ,
 
-234 [0xB8] = 
+235 [0xB8] = 
 ALT
 
 
-237 
+238 
 ušt8_t
  
 	gtoggËcode
 [256] =
 
-239 [0x3A] = 
+240 [0x3A] = 
 CAPSLOCK
 ,
 
-240 [0x45] = 
+241 [0x45] = 
 NUMLOCK
 ,
 
-241 [0x46] = 
+242 [0x46] = 
 SCROLLLOCK
 
 
-244 
+245 
 ušt8_t
  
 	gnÜm®m­
 [256] =
 
-246 
+247 
 NO
 , 0x1B, '1', '2', '3', '4', '5', '6',
 
-249 'o', 'p', '[', ']', '\n', 
+250 'o', 'p', '[', ']', '\n', 
 NO
 , 'a', 's',
 
-251 '\'', '`', 
+252 '\'', '`', 
 NO
 , '\\', 'z', 'x', 'c', 'v',
 
-252 'b', 'n', 'm', ',', '.', '/', 
+253 'b', 'n', 'm', ',', '.', '/', 
 NO
 , '*',
 
-253 
+254 
 NO
 , ' ', NO, NO, NO, NO, NO, NO,
 
-254 
+255 
 NO
 , NO, NO, NO, NO, NO, NO, '7',
 
-256 '2', '3', '0', '.', 
+257 '2', '3', '0', '.', 
 NO
 , NO, NO, NO,
 
-257 [0xC7] = 
+258 [0xC7] = 
 KEY_HOME
 , [0x9C] = '\n' ,
 
-258 [0xB5] = '/' , [0xC8] = 
+259 [0xB5] = '/' , [0xC8] = 
 KEY_UP
 ,
 
-259 [0xC9] = 
+260 [0xC9] = 
 KEY_PGUP
 , [0xCB] = 
 KEY_LF
 ,
 
-260 [0xCD] = 
+261 [0xCD] = 
 KEY_RT
 , [0xCF] = 
 KEY_END
 ,
 
-261 [0xD0] = 
+262 [0xD0] = 
 KEY_DN
 , [0xD1] = 
 KEY_PGDN
 ,
 
-262 [0xD2] = 
+263 [0xD2] = 
 KEY_INS
 , [0xD3] = 
 KEY_DEL
 
 
-265 
+266 
 ušt8_t
  
 	gshiám­
 [256] =
 
-267 
+268 
 NO
 , 033, '!', '@', '#', '$', '%', '^',
 
-270 'O', 'P', '{', '}', '\n', 
+271 'O', 'P', '{', '}', '\n', 
 NO
 , 'A', 'S',
 
-272 '"', '~', 
+273 '"', '~', 
 NO
 , '|', 'Z', 'X', 'C', 'V',
 
-273 'B', 'N', 'M', '<', '>', '?', 
+274 'B', 'N', 'M', '<', '>', '?', 
 NO
 , '*',
 
-274 
+275 
 NO
 , ' ', NO, NO, NO, NO, NO, NO,
 
-275 
+276 
 NO
 , NO, NO, NO, NO, NO, NO, '7',
 
-277 '2', '3', '0', '.', 
+278 '2', '3', '0', '.', 
 NO
 , NO, NO, NO,
 
-278 [0xC7] = 
+279 [0xC7] = 
 KEY_HOME
 , [0x9C] = '\n' ,
 
-279 [0xB5] = '/' , [0xC8] = 
+280 [0xB5] = '/' , [0xC8] = 
 KEY_UP
 ,
 
-280 [0xC9] = 
+281 [0xC9] = 
 KEY_PGUP
 , [0xCB] = 
 KEY_LF
 ,
 
-281 [0xCD] = 
+282 [0xCD] = 
 KEY_RT
 , [0xCF] = 
 KEY_END
 ,
 
-282 [0xD0] = 
+283 [0xD0] = 
 KEY_DN
 , [0xD1] = 
 KEY_PGDN
 ,
 
-283 [0xD2] = 
+284 [0xD2] = 
 KEY_INS
 , [0xD3] = 
 KEY_DEL
 
 
-286 
+287 
 	#C
 (
 x
@@ -14971,125 +14971,125 @@ x
 
 	)
 
-288 
+289 
 ušt8_t
  
 	gùlm­
 [256] =
-
-290 
-NO
-, NO, NO, NO, NO, NO, NO, NO,
 
 291 
 NO
 , NO, NO, NO, NO, NO, NO, NO,
 
 292 
+NO
+, NO, NO, NO, NO, NO, NO, NO,
+
+293 
 C
 ('Q'), C('W'), C('E'), C('R'), C('T'), C('Y'), C('U'), C('I'),
 
-293 
+294 
 C
 ('O'), C('P'), 
 NO
 , NO, '\r', NO, C('A'), C('S'),
 
-294 
+295 
 C
 ('D'), C('F'), C('G'), C('H'), C('J'), C('K'), C('L'), 
 NO
 ,
 
-295 
+296 
 NO
 , NO, NO, 
 C
 ('\\'), C('Z'), C('X'), C('C'), C('V'),
 
-296 
+297 
 C
 ('B'), C('N'), C('M'), 
 NO
 , NO, C('/'), NO, NO,
 
-297 [0x97] = 
+298 [0x97] = 
 KEY_HOME
 ,
 
-298 [0xB5] = 
+299 [0xB5] = 
 C
 ('/'), [0xC8] = 
 KEY_UP
 ,
 
-299 [0xC9] = 
+300 [0xC9] = 
 KEY_PGUP
 , [0xCB] = 
 KEY_LF
 ,
 
-300 [0xCD] = 
+301 [0xCD] = 
 KEY_RT
 , [0xCF] = 
 KEY_END
 ,
 
-301 [0xD0] = 
+302 [0xD0] = 
 KEY_DN
 , [0xD1] = 
 KEY_PGDN
 ,
 
-302 [0xD2] = 
+303 [0xD2] = 
 KEY_INS
 , [0xD3] = 
 KEY_DEL
 
 
-305 
+306 
 ušt8_t
  *
 	gch¬code
 [4] = {
 
-306 
+307 
 nÜm®m­
 ,
 
-307 
-shiám­
-,
-
 308 
-ùlm­
+shiám­
 ,
 
 309 
 ùlm­
+,
+
+310 
+ùlm­
 
 
-317 
+318 
 	$kbd_´oc_d©a
 ()
 
-319 
+320 
 c
 ;
 
-320 
+321 
 ušt8_t
  
 d©a
 ;
 
-321 
+322 
 ušt32_t
  
 shiá
 ;
 
-323 ià((
+324 ià((
 	`šb
 (
 KBSTATP
@@ -15097,7 +15097,7 @@ KBSTATP
 KBS_DIB
 ) == 0)
 
-326 
+327 
 d©a
  = 
 	`šb
@@ -15105,21 +15105,21 @@ d©a
 KBDATAP
 );
 
-328 ià(
+329 ià(
 d©a
  == 0xE0) {
 
-330 
+331 
 shiá
  |ð
 E0ESC
 ;
 
-332 } ià(
+333 } ià(
 d©a
  & 0x80) {
 
-334 
+335 
 d©a
  = (
 shiá
@@ -15127,7 +15127,7 @@ shiá
 E0ESC
  ? data : data & 0x7F);
 
-335 
+336 
 shiá
  &ð~(
 shiácode
@@ -15137,23 +15137,23 @@ d©a
 E0ESC
 );
 
-337 } ià(
+338 } ià(
 shiá
  & 
 E0ESC
 ) {
 
-339 
+340 
 d©a
  |= 0x80;
 
-340 
+341 
 shiá
  &ð~
 E0ESC
 ;
 
-343 
+344 
 shiá
  |ð
 shiácode
@@ -15161,7 +15161,7 @@ shiácode
 d©a
 ];
 
-344 
+345 
 shiá
  ^ð
 toggËcode
@@ -15169,7 +15169,7 @@ toggËcode
 d©a
 ];
 
-346 
+347 
 c
  = 
 ch¬code
@@ -15183,29 +15183,29 @@ SHIFT
 d©a
 ];
 
-347 ià(
+348 ià(
 shiá
  & 
 CAPSLOCK
 ) {
 
-348 ià('a' <ð
+349 ià('a' <ð
 c
  && c <= 'z')
 
-349 
+350 
 c
  += 'A' - 'a';
 
-350 ià('A' <ð
+351 ià('A' <ð
 c
  && c <= 'Z')
 
-351 
+352 
 c
  += 'a' - 'A';
 
-356 ià(!(~
+357 ià(!(~
 shiá
  & (
 CTL
@@ -15217,61 +15217,61 @@ c
 KEY_DEL
 ) {
 
-357 
+358 
 	`ýrštf
 ("Rebooting!\n");
 
-358 
+359 
 	`outb
 (0x92, 0x3);
 
-361  
+362  
 c
 ;
 
-362 
+363 
 	}
 }
 
-365 
+366 
 	$kbd_šŒ
 ()
 
-367 
+368 
 	`cÚs_šŒ
 (
 kbd_´oc_d©a
 );
 
-368 
+369 
 	}
 }
 
-371 
+372 
 	$kbd_š™
 ()
 
-374 
+375 
 	`kbd_šŒ
 ();
 
-375 
+376 
 	`œq_£tmask_8259A
 (
 œq_mask_8259A
  & ~(1<<1));
 
-376 
+377 
 	}
 }
 
-385 
+386 
 	#CONSBUFSIZE
  512
 
 	)
 
-388 
+389 
 ušt8_t
  
 	mbuf
@@ -15279,43 +15279,43 @@ ušt8_t
 CONSBUFSIZE
 ];
 
-389 
+390 
 ušt32_t
  
 	m½os
 ;
 
-390 
+391 
 ušt32_t
  
 	mwpos
 ;
 
-391 } 
+392 } 
 	gcÚs
 ;
 
-396 
+397 
 cÚs_šŒ
 ((*
 ´oc
 )())
 
-398 
+399 
 c
 ;
 
-400 (
+401 (
 c
  = (*
 ´oc
 )()) != -1) {
 
-401 ià(
+402 ià(
 c
  == 0)
 
-403 
+404 
 cÚs
 .
 buf
@@ -15325,7 +15325,7 @@ wpos
 c
 ;
 
-404 ià(
+405 ià(
 cÚs
 .
 wpos
@@ -15333,33 +15333,33 @@ wpos
 CONSBUFSIZE
 )
 
-405 
+406 
 cÚs
 .
 wpos
  = 0;
 
-407 
+408 
 	}
 }
 
-411 
+412 
 	$cÚs_g‘c
 ()
 
-413 
+414 
 c
 ;
 
-418 
+419 
 	`£rŸl_šŒ
 ();
 
-419 
+420 
 	`kbd_šŒ
 ();
 
-422 ià(
+423 ià(
 cÚs
 .
 ½os
@@ -15367,7 +15367,7 @@ cÚs
 wpos
 ) {
 
-423 
+424 
 c
  = 
 cÚs
@@ -15377,7 +15377,7 @@ buf
 ½os
 ++];
 
-424 ià(
+425 ià(
 cÚs
 .
 ½os
@@ -15385,121 +15385,121 @@ cÚs
 CONSBUFSIZE
 )
 
-425 
+426 
 cÚs
 .
 ½os
  = 0;
 
-426  
+427  
 c
 ;
 
-429 
+430 
 	}
 }
 
-433 
+434 
 	$cÚs_putc
 (
 c
 )
 
-435 
+436 
 	`£rŸl_putc
 (
 c
 );
 
-436 
+437 
 	`Ít_putc
 (
 c
 );
 
-437 
+438 
 	`cga_putc
 (
 c
 );
 
-438 
+439 
 	}
 }
 
-442 
+443 
 	$cÚs_š™
 ()
 
-444 
+445 
 	`cga_š™
 ();
 
-445 
+446 
 	`kbd_š™
 ();
 
-446 
+447 
 	`£rŸl_š™
 ();
 
-448 ià(!
+449 ià(!
 £rŸl_exi¡s
 )
 
-449 
+450 
 	`ýrštf
 ("Serial…ort does‚otƒxist!\n");
 
-450 
+451 
 	}
 }
 
-456 
+457 
 	$ýutch¬
 (
 c
 )
 
-458 
+459 
 	`cÚs_putc
 (
 c
 );
 
-459 
+460 
 	}
 }
 
-462 
+463 
 	$g‘ch¬
 ()
 
-464 
+465 
 c
 ;
 
-466 (
+467 (
 c
  = 
 	`cÚs_g‘c
 ()) == 0)
 
-468  
+469  
 c
 ;
 
-469 
+470 
 	}
 }
 
-472 
+473 
 	$iscÚs
 (
 fdnum
 )
 
-476 
+477 
 	}
 }
 
@@ -18061,153 +18061,149 @@ nb_š¢
 
 	@kern/e100.c
 
-35 
+44 
 	~<šc/x86.h
 >
 
-36 
+45 
 	~<šc/as£¹.h
 >
 
-38 
+47 
 	~<k”n/e100.h
 >
 
-40 
-	sc¤
-{
+48 
+	~<k”n/pci.h
+>
 
-42 
-ušt8_t
- 
-	m¡©us
-;
+50 
+	#CSR_STATUS
+ 0x0
 
-43 
-ušt8_t
- 
-	m¡©_ack
-;
+	)
 
-44 
-ušt8_t
- 
-	mcmd_lo
-;
+51 
+	#CSR_STAT_ACK
+ 0x1
 
-45 
-ušt8_t
- 
-	mcmd_hi
-;
+	)
 
-46 
-ušt32_t
- 
-	mg’_±r
-;
+52 
+	#CSR_CMD_LO
+ 0x2
 
-47 }
-	mscb
-;
+	)
 
-48 
-ušt32_t
- 
-	mpÜt
-;
+53 
+	#CSR_CMD_HI
+ 0x3
 
-49 
-ušt16_t
- 
-	mæash_ù¾
-;
+	)
 
-50 
-ušt8_t
- 
-	m“´om_ù¾_lo
-;
+54 
+	#CSR_GEN_PTR
+ 0x4
 
-51 
-ušt8_t
- 
-	m“´om_ù¾_hi
-;
+	)
 
-52 
-ušt32_t
- 
-	mmdi_ù¾
-;
+55 
+	#CSR_PORT
+ 0x8
 
-53 
-ušt32_t
- 
-	mrx_dma_couÁ
-;
+	)
 
-55 
+56 
+	#CSR_FLASH_CTRL
+ 0xc
+
+	)
+
+57 
+	#CSR_EEPROM_CTRL_LO
+ 0xe
+
+	)
+
+58 
+	#CSR_EEPROM_CTRL_HI
+ 0xf
+
+	)
+
+59 
+	#CSR_MDI_CTRL
+ 0x10
+
+	)
+
+60 
+	#CSR_RX_DMA_COUNT
+ 0x14
+
+	)
+
+61 
 	escb_¡©us
 {
 
-56 
+62 
 	mrus_»ady
 =0x10,
 
-57 
+63 
 	mrus_mask
 =0x3c,
 
-59 
+65 
 	eru_¡©e
 {
 
-60 
+66 
 	mRU_SUSPENDED
 =0,
 
-61 
+67 
 	mRU_RUNNING
 =1,
 
-62 
+68 
 	mRU_UNINITIALIZED
 =-1,
 
-64 
+70 
 	escb_¡©_ack
 {
 
-65 
+71 
 	m¡©_ack_nÙ_ours
 =0x00,
 
-66 
+72 
 	m¡©_ack_sw_g’
 =0x04,
 
-67 
+73 
 	m¡©_ack_ºr
 =0x10,
 
-68 
+74 
 	m¡©_ack_cu_idË
 =0x20,
 
-69 
+75 
 	m¡©_ack_äame_rx
 =0x40,
 
-70 
+76 
 	m¡©_ack_cu_cmd_dÚe
 =0x80,
 
-71 
+77 
 	m¡©_ack_nÙ_´e£Á
 =0xFF,
 
-72 
+78 
 	m¡©_ack_rx
 =(
 ¡©_ack_sw_g’
@@ -18217,7 +18213,7 @@ ušt32_t
 ¡©_ack_äame_rx
 ),
 
-73 
+79 
 	m¡©_ack_tx
 =(
 ¡©_ack_cu_idË
@@ -18225,63 +18221,145 @@ ušt32_t
 ¡©_ack_cu_cmd_dÚe
 ),
 
-79 
+85 
 	escb_cmd_hi
 {
 
-80 
+86 
 	mœq_mask_nÚe
 =0x00,
 
-81 
+87 
 	mœq_mask_®l
 =0x01,
 
-82 
+88 
 	mœq_sw_g’
 =0x02,
 
-84 
+90 
 	escb_cmd_lo
 {
 
-85 
+91 
 	mcuc_nÝ
 =0x00,
 
-86 
+92 
 	mruc_¡¬t
 =0x01,
 
-87 
+93 
 	mruc_lßd_ba£
 =0x06,
 
-88 
+94 
 	mcuc_¡¬t
 =0x10,
 
-89 
+95 
 	mcuc_»sume
 =0x20,
 
-90 
+96 
 	mcuc_dump_addr
 =0x40,
 
-91 
+97 
 	mcuc_dump_¡©s
 =0x50,
 
-92 
+98 
 	mcuc_lßd_ba£
 =0x60,
 
-93 
+99 
 	mcuc_dump_»£t
 =0x70,
 
-97 
+101 
+	epÜt
+{
+
+102 
+	msoáw¬e_»£t
+=0x0000,
+
+103 
+	m£láe¡
+=0x0001,
+
+104 
+	m£Ëùive_»£t
+=0x0002,
+
+107 
+	scb
+{
+
+108 vÞ©ž
+ušt16_t
+ 
+	m¡©us
+;
+
+109 
+ušt16_t
+ 
+	mcmd
+;
+
+110 
+ušt32_t
+ 
+	mlšk
+;
+
+115 
+	$d–ay
+()
+
+117 
+	`šb
+(0x84);
+
+118 
+	`šb
+(0x84);
+
+119 
+	`šb
+(0x84);
+
+120 
+	`šb
+(0x84);
+
+121 
+	`šb
+(0x84);
+
+122 
+	`šb
+(0x84);
+
+123 
+	`šb
+(0x84);
+
+124 
+	`šb
+(0x84);
+
+125 
+	}
+}
+
+126 
+	gCSR_ADDR
+;
+
+128 
 	$pci_e100_©ch
 (
 pci_func
@@ -18289,11 +18367,75 @@ pci_func
 pcif
 )
 
-99 
-	`·nic
-("e100 initialization is‚ot implemented\n");
+130 
+	`pci_func_’abË
+(
+pcif
+);
 
-101 
+131 
+	`ýrštf
+("CSR MemÜy M­³d Ba£ Add»s Regi¡”:%d by‹ © 0x%x\n",
+pcif
+->
+»g_size
+[0],pcif->
+»g_ba£
+[0]);
+
+132 
+	`ýrštf
+("CSR I/O M­³d Ba£ Add»s Regi¡”:%d by‹ © 0x%x\n",
+pcif
+->
+»g_size
+[1],pcif->
+»g_ba£
+[1]);
+
+133 
+	`ýrštf
+("FÏsh MemÜy Ba£ Add»s Regi¡”:%d by‹ © 0x%x\n",
+pcif
+->
+»g_size
+[2],pcif->
+»g_ba£
+[2]);
+
+134 
+CSR_ADDR
+=
+pcif
+->
+»g_ba£
+[1];
+
+135 
+	`ýrštf
+("pÜt:0x%x,£Ëùive_»£t=0x%x\n",
+CSR_ADDR
++
+CSR_PORT
+,
+£Ëùive_»£t
+);
+
+136 
+	`ouŽ
+(
+CSR_ADDR
++
+CSR_PORT
+,
+soáw¬e_»£t
+);
+
+137 
+	`d–ay
+();
+
+140 
 	}
 }
 
@@ -38799,7 +38941,7 @@ tf
 
 10 
 	gpci_show_addrs
- = 0;
+ = 1;
 
 14 
 ušt32_t
@@ -39141,7 +39283,7 @@ pci_func
 f
 )
 
-93 
+95 
 	`pci_©ch_m©ch
 (
 	`PCI_CLASS
@@ -39151,7 +39293,7 @@ f
 dev_þass
 ),
 
-94 
+96 
 	`PCI_SUBCLASS
 (
 f
@@ -39159,13 +39301,13 @@ f
 dev_þass
 ),
 
-95 &
+97 &
 pci_©ch_þass
 [0], 
 f
 ) ||
 
-96 
+98 
 	`pci_©ch_m©ch
 (
 	`PCI_VENDOR
@@ -39175,7 +39317,7 @@ f
 dev_id
 ),
 
-97 
+99 
 	`PCI_PRODUCT
 (
 f
@@ -39183,21 +39325,21 @@ f
 dev_id
 ),
 
-98 &
+100 &
 pci_©ch_v’dÜ
 [0], 
 f
 );
 
-99 
+101 
 	}
 }
 
-101 cÚ¡ *
+103 cÚ¡ *
 	gpci_þass
 [] =
 
-113 
+115 
 	$pci_´št_func
 (
 pci_func
@@ -39205,13 +39347,13 @@ pci_func
 f
 )
 
-115 cÚ¡ *
+117 cÚ¡ *
 þass
  = 
 pci_þass
 [0];
 
-116 ià(
+118 ià(
 	`PCI_CLASS
 (
 f
@@ -39221,7 +39363,7 @@ dev_þass
 pci_þass
 ) / (pci_class[0]))
 
-117 
+119 
 þass
  = 
 pci_þass
@@ -39233,11 +39375,11 @@ f
 dev_þass
 )];
 
-119 
+121 
 	`ýrštf
 ("PCI: %02x:%02x.%d: %04x:%04x: class: %x.%x (%s) irq: %d\n",
 
-120 
+122 
 f
 ->
 bus
@@ -39249,7 +39391,7 @@ dev
 func
 ,
 
-121 
+123 
 	`PCI_VENDOR
 (
 f
@@ -39259,7 +39401,7 @@ dev_id
 	`PCI_PRODUCT
 (f->dev_id),
 
-122 
+124 
 	`PCI_CLASS
 (
 f
@@ -39271,17 +39413,17 @@ dev_þass
 þass
 ,
 
-123 
+125 
 f
 ->
 œq_lše
 );
 
-124 
+126 
 	}
 }
 
-127 
+129 
 	$pci_sÿn_bus
 (
 pci_bus
@@ -39289,35 +39431,35 @@ pci_bus
 bus
 )
 
-129 
+131 
 tÙ®dev
  = 0;
 
-130 
+132 
 pci_func
  
 df
 ;
 
-131 
+133 
 	`mem£t
 (&
 df
 , 0, (df));
 
-132 
+134 
 df
 .
 bus
  = bus;
 
-134 
+136 
 df
 .
 dev
  = 0; df.dev < 32; df.dev++) {
 
-135 
+137 
 ušt32_t
  
 bhlc
@@ -39329,17 +39471,17 @@ df
 PCI_BHLC_REG
 );
 
-136 ià(
+142 ià(
 	`PCI_HDRTYPE_TYPE
 (
 bhlc
 ) > 1)
 
-139 
+145 
 tÙ®dev
 ++;
 
-141 
+147 
 pci_func
  
 f
@@ -39347,7 +39489,7 @@ f
 df
 ;
 
-142 
+150 
 f
 .
 func
@@ -39357,13 +39499,13 @@ func
 bhlc
 ) ? 8 : 1);
 
-143 
+151 
 f
 .
 func
 ++) {
 
-144 
+152 
 pci_func
  
 af
@@ -39371,7 +39513,7 @@ af
 f
 ;
 
-146 
+154 
 af
 .
 dev_id
@@ -39383,7 +39525,7 @@ f
 PCI_ID_REG
 );
 
-147 ià(
+156 ià(
 	`PCI_VENDOR
 (
 af
@@ -39391,7 +39533,7 @@ af
 dev_id
 ) == 0xffff)
 
-150 
+159 
 ušt32_t
  
 šŒ
@@ -39403,7 +39545,7 @@ af
 PCI_INTERRUPT_REG
 );
 
-151 
+160 
 af
 .
 œq_lše
@@ -39413,7 +39555,7 @@ af
 šŒ
 );
 
-153 
+164 
 af
 .
 dev_þass
@@ -39423,31 +39565,31 @@ dev_þass
 PCI_CLASS_REG
 );
 
-154 ià(
+165 ià(
 pci_show_devs
 )
 
-155 
+166 
 	`pci_´št_func
 (&
 af
 );
 
-156 
+167 
 	`pci_©ch
 (&
 af
 );
 
-160  
+171  
 tÙ®dev
 ;
 
-161 
+172 
 	}
 }
 
-164 
+175 
 	$pci_bridge_©ch
 (
 pci_func
@@ -39455,7 +39597,7 @@ pci_func
 pcif
 )
 
-166 
+177 
 ušt32_t
  
 iÜeg
@@ -39467,7 +39609,7 @@ pcif
 PCI_BRIDGE_STATIO_REG
 );
 
-167 
+178 
 ušt32_t
  
 bu¤eg
@@ -39479,17 +39621,17 @@ pcif
 PCI_BRIDGE_BUS_REG
 );
 
-169 ià(
+182 ià(
 	`PCI_BRIDGE_IO_32BITS
 (
 iÜeg
 )) {
 
-170 
+183 
 	`ýrštf
 ("PCI: %02x:%02x.%d: 32-bit bridge IO‚ot supported.\n",
 
-171 
+184 
 pcif
 ->
 bus
@@ -39501,19 +39643,19 @@ dev
 func
 );
 
-175 
+188 
 pci_bus
  
 nbus
 ;
 
-176 
+189 
 	`mem£t
 (&
 nbus
 , 0, (nbus));
 
-177 
+190 
 nbus
 .
 ·»Á_bridge
@@ -39521,7 +39663,7 @@ nbus
 pcif
 ;
 
-178 
+193 
 nbus
 .
 bu¢o
@@ -39531,15 +39673,15 @@ bu¤eg
 PCI_BRIDGE_BUS_SECONDARY_SHIFT
 ) & 0xff;
 
-180 ià(
+195 ià(
 pci_show_devs
 )
 
-181 
+196 
 	`ýrštf
 ("PCI: %02x:%02x.%d: bridgeo PCI bus %d--%d\n",
 
-182 
+197 
 pcif
 ->
 bus
@@ -39551,29 +39693,29 @@ dev
 func
 ,
 
-183 
+198 
 nbus
 .
 bu¢o
 ,
 
-184 (
+199 (
 bu¤eg
  >> 
 PCI_BRIDGE_BUS_SUBORDINATE_SHIFT
 ) & 0xff);
 
-186 
+201 
 	`pci_sÿn_bus
 (&
 nbus
 );
 
-188 
+203 
 	}
 }
 
-193 
+210 
 	$pci_func_’abË
 (
 pci_func
@@ -39581,7 +39723,7 @@ pci_func
 f
 )
 
-195 
+216 
 	`pci_cÚf_wr™e
 (
 f
@@ -39589,31 +39731,31 @@ f
 PCI_COMMAND_STATUS_REG
 ,
 
-196 
+217 
 PCI_COMMAND_IO_ENABLE
  |
 
-197 
+218 
 PCI_COMMAND_MEM_ENABLE
  |
 
-198 
+219 
 PCI_COMMAND_MASTER_ENABLE
 );
 
-200 
+221 
 ušt32_t
  
 b¬_width
 ;
 
-201 
+222 
 ušt32_t
  
 b¬
 ;
 
-202 
+223 
 b¬
  = 
 PCI_MAPREG_START
@@ -39621,13 +39763,13 @@ PCI_MAPREG_START
 PCI_MAPREG_END
 ;
 
-203 
+224 
 b¬
  +ð
 b¬_width
 )
 
-205 
+226 
 ušt32_t
  
 Þdv
@@ -39639,11 +39781,11 @@ f
 b¬
 );
 
-207 
+228 
 b¬_width
  = 4;
 
-208 
+229 
 	`pci_cÚf_wr™e
 (
 f
@@ -39651,7 +39793,7 @@ f
 b¬
 , 0xffffffff);
 
-209 
+230 
 ušt32_t
  
 rv
@@ -39663,11 +39805,11 @@ f
 b¬
 );
 
-211 ià(
+232 ià(
 rv
  == 0)
 
-214 
+235 
 »gnum
  = 
 	`PCI_MAPREG_NUM
@@ -39675,7 +39817,7 @@ rv
 b¬
 );
 
-215 
+236 
 ušt32_t
  
 ba£
@@ -39683,7 +39825,7 @@ ba£
 size
 ;
 
-216 ià(
+239 ià(
 	`PCI_MAPREG_TYPE
 (
 rv
@@ -39691,7 +39833,7 @@ rv
 PCI_MAPREG_TYPE_MEM
 ) {
 
-217 ià(
+240 ià(
 	`PCI_MAPREG_MEM_TYPE
 (
 rv
@@ -39699,11 +39841,11 @@ rv
 PCI_MAPREG_MEM_TYPE_64BIT
 )
 
-218 
+241 
 b¬_width
  = 8;
 
-220 
+243 
 size
  = 
 	`PCI_MAPREG_MEM_SIZE
@@ -39711,7 +39853,7 @@ size
 rv
 );
 
-221 
+244 
 ba£
  = 
 	`PCI_MAPREG_MEM_ADDR
@@ -39719,15 +39861,15 @@ ba£
 Þdv
 );
 
-222 ià(
+245 ià(
 pci_show_addrs
 )
 
-223 
+246 
 	`ýrštf
 (" mem„egion %d: %d bytes‡t 0x%x\n",
 
-224 
+247 
 »gnum
 , 
 size
@@ -39735,7 +39877,7 @@ size
 ba£
 );
 
-226 
+249 
 size
  = 
 	`PCI_MAPREG_IO_SIZE
@@ -39743,7 +39885,7 @@ size
 rv
 );
 
-227 
+250 
 ba£
  = 
 	`PCI_MAPREG_IO_ADDR
@@ -39751,15 +39893,15 @@ ba£
 Þdv
 );
 
-228 ià(
+251 ià(
 pci_show_addrs
 )
 
-229 
+252 
 	`ýrštf
 (" io„egion %d: %d bytes‡t 0x%x\n",
 
-230 
+253 
 »gnum
 , 
 size
@@ -39767,7 +39909,7 @@ size
 ba£
 );
 
-233 
+256 
 	`pci_cÚf_wr™e
 (
 f
@@ -39777,7 +39919,7 @@ b¬
 Þdv
 );
 
-234 
+257 
 f
 ->
 »g_ba£
@@ -39787,7 +39929,7 @@ f
 ba£
 ;
 
-235 
+258 
 f
 ->
 »g_size
@@ -39797,17 +39939,17 @@ f
 size
 ;
 
-237 ià(
+260 ià(
 size
  && !
 ba£
 )
 
-238 
+261 
 	`ýrštf
 ("PCI device %02x:%02x.%d (%04x:%04x) "
 
-241 
+264 
 f
 ->
 bus
@@ -39819,7 +39961,7 @@ dev
 func
 ,
 
-242 
+265 
 	`PCI_VENDOR
 (
 f
@@ -39829,7 +39971,7 @@ dev_id
 	`PCI_PRODUCT
 (f->dev_id),
 
-243 
+266 
 »gnum
 , 
 ba£
@@ -39837,11 +39979,11 @@ ba£
 size
 );
 
-246 
+269 
 	`ýrštf
 ("PCI function %02x:%02x.%d (%04x:%04x)ƒnabled\n",
 
-247 
+270 
 f
 ->
 bus
@@ -39853,7 +39995,7 @@ dev
 func
 ,
 
-248 
+271 
 	`PCI_VENDOR
 (
 f
@@ -39863,33 +40005,33 @@ dev_id
 	`PCI_PRODUCT
 (f->dev_id));
 
-249 
+272 
 	}
 }
 
-252 
+275 
 	$pci_š™
 ()
 
-254 
+277 
 pci_bus
  
 roÙ_bus
 ;
 
-255 
+278 
 	`mem£t
 (&
 roÙ_bus
 , 0, (root_bus));
 
-257  
+281  
 	`pci_sÿn_bus
 (&
 roÙ_bus
 );
 
-258 
+282 
 	}
 }
 
@@ -172957,7 +173099,7 @@ SYS_LIGHTWEIGHT_PROT
 sys_´Ù_t
  
 	)
-Ëv
+lev
 
 177 
 	#SYS_ARCH_PROTECT
@@ -229133,7 +229275,7 @@ comp
 ¡©s
 .
 	)
-couÁ”
+counter
 
 47 
 	#INCR

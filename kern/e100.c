@@ -103,11 +103,35 @@ enum port{
 	selftest=0x0001,
 	selective_reset=0x0002,
 };
-
+#define CBS_MIN	64
+#define CBS_MAX 128
+#define CBS_COUNT 50
+/*保持整个结构体32字节对齐*/
+#define UCODE_SIZE	134
+/*
+简单方式下，传输数据紧跟在传输命令块(TCB)之后.
+灵活方式下，通过传输缓冲描述符(TBD)数组来存取多个data buffers.
+本驱动采用简单方式:
+tbd_array=0xFFFFFFFF
+tcb_byte_count=0
+threshold=0xE0,当transmit FIFO中有0xE0*8个字节，才开始发送
+*/
 struct cb{
 	volatile uint16_t status;
 	uint16_t cmd;
 	uint32_t link;
+	union{
+		uint32_t ucode[UCODE_SIZE];
+		struct{
+			uint32_t tbd_array;
+			uint16_t tcb_byte_count;
+			uint8_t threshold;
+			uint8_t tbd_count;
+		}tcb;
+		uint32_t simple_buffer_addr;
+	}u;
+	struct cb *next,*prev;
+	dma_addr_t dma_addr;
 };
 
 //延时10us
@@ -131,10 +155,19 @@ pci_e100_attach(struct pci_func *pcif)
 	cprintf("CSR Memory Mapped Base Address Register:%d bytes at 0x%x\n",pcif->reg_size[0],pcif->reg_base[0]);
 	cprintf("CSR I/O Mapped Base Address Register:%d bytes at 0x%x\n",pcif->reg_size[1],pcif->reg_base[1]);
 	cprintf("Flash Memory Base Address Register:%d bytes at 0x%x\n",pcif->reg_size[2],pcif->reg_base[2]);
-	CSR_ADDR=pcif->reg_base[1];
-	cprintf("port:0x%x,selective_reset=0x%x\n",CSR_ADDR+CSR_PORT,selective_reset);
-	outl(CSR_ADDR+CSR_PORT,software_reset);
-	delay();
-	panic("e100 initialization is not implemented\n");
+	CSR_ADDR=pcif->reg_base[1];//利用I/O端口操作CSR
+	outl(CSR_ADDR+CSR_PORT,software_reset);//向PORT中写入0,软件重启芯片
+	delay();//延时10us
+	//panic("e100 initialization is not implemented\n");
+	return 0;
+}
+//构建一个DMA环(循环单链表),由CB构成,CB之间通过link指针连接
+//link里面存放的是下一个CB的物理地址
+dma_addr_t dma_ring;
+dma_addr_t dma_ring_head;
+dma_addr_t dma_ring_tail;
+static int
+e100_alloc_cbs()
+{
 	return 0;
 }

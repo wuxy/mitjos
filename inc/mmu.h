@@ -136,7 +136,7 @@
 #ifdef __ASSEMBLER__
 
 /*
- * Macros to build GDT entries in assembly.
+ * Macros to build GDT entries in assembly.汇编中使用的版本
  */
 #define SEG_NULL						\
 	.word 0, 0;						\
@@ -214,6 +214,7 @@ struct Segdesc {
 #ifndef __ASSEMBLER__
 
 // Task state segment format (as described by the Pentium architecture book)
+//任务状态段
 struct Taskstate {
 	uint32_t ts_link;	// Old ts selector
 	uintptr_t ts_esp0;	// Stack pointers and segment selectors

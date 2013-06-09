@@ -66,7 +66,7 @@ protcseg:
   
   # Set up the stack pointer and call into C.
   movl    $start, %esp
-  call bootmain
+  call bootmain			#调用main.c中的bootmain，加载内核镜像
 
   # If bootmain returns (it shouldn't), loop.
 spin:

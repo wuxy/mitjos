@@ -13,8 +13,13 @@ PCI: 00:01.1: 8086:7010: class: 1.1 (Storage controller) irq: 0
 PCI: 00:01.3: 8086:7113: class: 6.80 (Bridge device) irq: 9
 PCI: 00:02.0: 1013:00b8: class: 3.0 (Display controller) irq: 0
 PCI: 00:03.0: 8086:1209: class: 2.0 (Network controller) irq: 11
+  mem region 0: 4096 bytes at 0xf2020000
+  io region 1: 64 bytes at 0xc040
+  mem region 2: 131072 bytes at 0xf2040000
 PCI function 00:03.0 (8086:1209) enabled
-PCI: 00:04.0: 1af4:1002: class: 5.0 (Memory controller) irq: 9
+CSR Memory Mapped Base Address Register:4096 bytes at 0xf2020000
+CSR I/O Mapped Base Address Register:64 bytes at 0xc040
+Flash Memory Base Address Register:131072 bytes at 0xf2040000
 FS is running
 FS can do I/O
 Device 1 presence: 1
@@ -31,7 +36,7 @@ envid2env:id=1006
 user panic in ns at lib/ipc.c:83: send error:bad environment
 Welcome to the JOS kernel monitor!
 Type 'help' for a list of commands.
-TRAP frame at 0xf02c80f8
+TRAP frame at 0xf02c90f8
   edi  0x00000007
   esi  0x00001006
   ebp  0x08001e78
@@ -44,7 +49,7 @@ TRAP frame at 0xf02c80f8
   ds   0x----0023
   trap 0x00000003 Breakpoint
   err  0x00000000
-  eip  0x00800913
+  eip  0x008008f3
   cs   0x----001b
   flag 0x00000212
   esp  0x08001e50

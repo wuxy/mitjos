@@ -134,18 +134,18 @@
 
 #ifndef __ASSEMBLER__
 
-/*
+/* 
  * The page directory entry corresponding to the virtual address range
  * [VPT, VPT + PTSIZE) points to the page directory itself.  Thus, the page
  * directory is treated as a page table as well as a page directory.
- *
+ * 4MB的页面,页目录是4KB
  * One result of treating the page directory as a page table is that all PTEs
  * can be accessed through a "virtual page table" at virtual address VPT (to
  * which vpt is set in entry.S).  The PTE for page number N is stored in
  * vpt[N].  (It's worth drawing a diagram of this!)
- *
+ * 当前页目录的内容在(VPT + (VPT >> PGSHIFT)),页目录虚拟地址范围0xefcefc00---0xefcf0c00
  * A second consequence is that the contents of the current page directory
- * will always be available at virtual address (VPT + (VPT >> PGSHIFT)), to
+ * will always be available at virtual address (VPT + (VPT >> 10)), to
  * which vpd is set in entry.S.
  */
 typedef uint32_t pte_t;
